@@ -7,7 +7,7 @@ type ResponseData = {
   message: string
 }
 
-export async function GET(req: NextApiRequest, res: NextApiResponse): Promise<Response> {
+export async function GET(): Promise<Response> {
   await connectMongoDB();
 
   const places = await PartyPlace.find();
@@ -27,10 +27,10 @@ export async function POST(req: Request, res: NextApiResponse): Promise<Response
   return NextResponse.json({ message: "Party place created" }, {status: 201});
 }
 
-export async function PUT(req: NextApiRequest, res: NextApiResponse): Promise<Response> {
+export async function PUT(req: Request, res: NextApiResponse): Promise<Response> {
   await connectMongoDB();
-  const { id } = req.query;
-  const { name, maxPeople } = req.body;
+  const { id } = await req.json();
+  const { name, maxPeople } = req.json() as any;
   await PartyPlace.findByIdAndUpdate(id, { name, maxPeople });
   return NextResponse.json({ message: "Party place updated" }, {status: 200});
 }

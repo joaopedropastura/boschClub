@@ -7,7 +7,7 @@ type ResponseData = {
   message: string
 }
 
-export async function GET(req: NextApiRequest, res: NextApiResponse): Promise<Response> {
+export async function GET(): Promise<Response> {
   await connectMongoDB();
 
   const users = await User.find();

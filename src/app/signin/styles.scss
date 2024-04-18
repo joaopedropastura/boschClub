@@ -1,0 +1,93 @@
+
+$background-color: #fff;
+$border-radius: 5px; // ajuste para corresponder ao arredondamento da sua imagem
+$box-shadow: 0 4px 6px --background; // ajuste conforme necessário
+$padding: 10px 20px; // ajuste conforme necessário
+$text-color: #000; // ajuste conforme necessário
+$font-size: 16px; // ajuste conforme necessário
+$red-club-bosch: #d10022;
+
+.mainFrame {
+  display: flex;
+  justify-content: center;
+  gap: 50rem;
+}
+
+.container {
+  width: fit-content;
+  padding: 2rem;
+  border-radius: 10px;
+  gap: 2rem;
+  display: flex;
+  flex-direction: column;
+  border: none; // Remover a borda padrão
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
+  padding: $padding;
+}
+
+.logoImage {
+  display: flex;
+  justify-content: center;
+}
+
+.input-style {
+  border: none; // Remover a borda padrão
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
+  padding: $padding;
+  color: $text-color;
+  font-size: $font-size;
+  outline: none; // Remove o outline padrão quando em foco
+
+  &:focus {
+    box-shadow: 0 0 0 2px rgba(57, 56, 56, 0.2); // Mudar a sombra para indicar foco
+  }
+}
+
+input[type="text"] {
+  @extend .input-style;
+}
+
+.signIn {
+  background-color: $red-club-bosch;
+  color: $background-color;
+  font-size: 1.125rem;
+  display: block;
+  cursor: pointer;
+  border: none;
+  border-radius: $border-radius;
+  transition: 0.1s;
+  background: $red-club-bosch;
+  color: $background-color;
+  padding: 0.6em 1.2em;
+  margin-bottom: 0.1rem;
+  line-height: 1;
+  width: 80%;
+}
+
+.signIn:hover,
+.signIn:focus {
+  background: $red-club-bosch;
+  box-shadow: 0 0 0 3px $background-color, 0 0 0 4px $red-club-bosch;
+  outline: none;
+}
+
+.signIn:active {
+  box-shadow: 0 0 0 3px $background-color, 0 0 0 4px $red-club-bosch;
+}
+
+.signUp {
+  border: none;
+  font-size: 0.7rem;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+
+.loginBtn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}

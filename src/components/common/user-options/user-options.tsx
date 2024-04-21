@@ -1,3 +1,4 @@
+"use server";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -13,20 +14,11 @@ import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import BtnLogout from "../btn-logout/btn-logout";
 import Link from "next/link";
+import verifySession from "@/actions/verify-session";
 
-type UserData = {
-  user: {
-    name: string;
-    email: string;
-    image: string;
-  };
-};
 
 export default async function userOptions() {
-  const session = await getServerSession();
-  if (!session) {
-    redirect("/signin");
-  }
+  const session = await verifySession();
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>

@@ -1,8 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import ClubeBoschLogo from "../../../public/clubBosch.svg";
-import Link from "next/link";
+import ClubeBoschLogo from "@/../public/clubBosch.svg"
+
+import { Poppins } from "next/font/google"
+import { cn } from "@/lib/utils"
 
 import { signIn } from "next-auth/react";
 import { Button } from "@/components/ui/button";
@@ -16,14 +18,22 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { LoginButton } from "@/components/common/auth/login-button";
+
+
+
+const font = Poppins({
+  subsets: ["latin"],
+  weight: ["600"]
+})
 
 export default function Login() {
+  
   return (
-    <main className="mainFrame">
-
+    <main className={cn("", font.className)}>
       <Card className="w-[350px]">
         <CardHeader>
-          <div className="logoImage">
+          <div className="">
             <Image
               src={ClubeBoschLogo}
               alt={"icone do clube bosch"}
@@ -56,28 +66,39 @@ export default function Login() {
         </CardContent>
         <CardFooter className="flex flex-col justify-around">
           <div className="flex w-11/12 px-2">
-            {/* <Button className="w-32" onClick={() => signIn("github", { callbackUrl: "/" })}>
+            <Button className="w-32" onClick={() => signIn("github", { callbackUrl: "/" })}>
               github
-            </Button> */}
-            <Button variant={"outline"} className="w-32" onClick={() => signIn("google", { callbackUrl: "/" })}>
+            </Button>
+            <Button
+              variant={"outline"}
+              className="w-32"
+              onClick={() => signIn("google", { callbackUrl: "/" })}
+            >
               google
             </Button>
-            <Button variant={"outline"} className="w-32" onClick={() => signIn("facebook", { callbackUrl: "/" })}>
+            <Button
+              variant={"outline"}
+              className="w-32"
+              onClick={() => signIn("facebook", { callbackUrl: "/" })}
+            >
               facebook
             </Button>
-            <Button variant={"outline"} className="w-32" onClick={() => signIn("instagram", { callbackUrl: "/" })}>
+            <Button
+              variant={"outline"}
+              className="w-32"
+              onClick={() => signIn("instagram", { callbackUrl: "/" })}
+            >
               instagram
             </Button>
-          </div >
-          <div className="flex w-full justify-around px-2">
-          <Button className="w-11/12">
-            entrar
-          </Button>
-
           </div>
-          <Link href="/signup" className="signUp cursor-pointer">
-            registre-se
-          </Link>
+          <div className="flex w-full justify-around px-2">
+            <Button className="w-11/12">entrar</Button>
+          </div>
+          <LoginButton>
+            <Button variant="secondary" size="lg">
+              registre-se
+            </Button>
+          </LoginButton>
         </CardFooter>
       </Card>
     </main>

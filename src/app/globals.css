@@ -2,6 +2,13 @@
   @tailwind components;
   @tailwind utilities;
 
+
+  html,
+  body,
+  :root {
+    height: 100%;
+  }
+
   @layer base {
     :root {
       --background: 0 0% 100%;
@@ -74,28 +81,3 @@
       @apply bg-background text-foreground;
     }
   }
-
-
-  hr {
-    border: 2px solid #eee;
-    margin: 2rem auto;
-  }
-  
-  video,
-  img {
-    max-width: 100%;
-    display: block;
-  }
-  
-  .flex {
-    display: flex;
-    gap: 1rem;
-  }
-  
-  .menu {
-    display: flex;
-    gap: 1.5rem;
-    list-style: none;
-    padding: 0;
-  }
-  

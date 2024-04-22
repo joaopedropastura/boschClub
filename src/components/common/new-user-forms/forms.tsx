@@ -54,7 +54,7 @@ export default function Forms() {
       edv: values.edv,
     };
     try {
-      const response = await fetch("http://localhost:3000/api/user", {
+      const response = await fetch(`${process.env.URI}/api/user`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

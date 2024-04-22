@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import AvatarIcon from "../avatar-icon/avatar";
 import ModalHead from "./head";
-import HistorySchedules from "./history";
+import HistorySchedules from "./history/history";
 
 export default function ModalSchedules(
     {children} : {children: React.ReactNode}

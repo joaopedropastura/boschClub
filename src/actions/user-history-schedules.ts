@@ -3,6 +3,23 @@
 import verifySession from "./verify-session";
 import Event from "@/models/EventModel/event";
 
+
+type Event = {
+    events: Array<{
+        name: string;
+        date: string;
+        place: {
+        name: string;
+        maxPeople: number;
+        };
+        renter: {
+        name: string;
+        email: string;
+        };
+        status: string;
+    }>;
+    };
+
 export default async function UserSchedulesHistory() {
   const session = await verifySession();
 
@@ -10,7 +27,7 @@ export default async function UserSchedulesHistory() {
     `http://localhost:3000/api/event?id=${session?.user?.email}`
   );
 
-  const data = (await response.json()) as Event;
-  
+  const data : Event = (await response.json());
+  console.log(data)
   return data.events;
 }

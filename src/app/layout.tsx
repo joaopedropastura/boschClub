@@ -4,6 +4,7 @@ import { ThemeProvider } from "@/providers/theme-provider";
 import ThemeSwitcher from "@/components/common/theme-switcher/theme-switcher";
 import { Poppins } from "next/font/google"
 import { cn } from "@/lib/utils"
+import { ReactNode } from "react";
 
 export const metadata: Metadata = {
   title: "clube bosch",
@@ -17,12 +18,10 @@ const font = Poppins({
 
 export default function RootLayout({
   children,
-  excludeMenu = false,
-}: Readonly<{
-  children: React.ReactNode;
-  excludeMenu?: boolean;
+}: {
+  children: ReactNode;
 
-}>) {  
+}) {  
   return (
     <html lang="en">
       <body className={cn("", font.className)}>

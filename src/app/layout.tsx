@@ -6,6 +6,8 @@ import { Poppins } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { ReactNode } from "react";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next"
+
 
 export const metadata: Metadata = {
   title: "clube bosch",
@@ -29,7 +31,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         >
           {children}
           <Analytics />
+          <SpeedInsights />
         </ThemeProvider>
+
       </body>
     </html>
   );

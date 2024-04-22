@@ -40,7 +40,7 @@ export default async function HistorySchedules() {
       <AccordionItem value="item-1">
         <AccordionTrigger>Histórico</AccordionTrigger>
         <AccordionContent className="flex flex-col gap-4">
-          {data.map((event: any, index) => (
+          {data.map((event: any, index: number) => (
             <Card key={index}>
               <CardHeader>
                 <CardTitle className="text-lg">{event.place.name}</CardTitle>

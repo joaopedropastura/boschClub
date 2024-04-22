@@ -66,9 +66,9 @@ export default function Login() {
         </CardContent>
         <CardFooter className="flex flex-col justify-around">
           <div className="flex w-11/12 px-2">
-            <Button className="w-32" onClick={() => signIn("github", { callbackUrl: "/" })}>
+            {/* <Button className="w-32" onClick={() => signIn("github", { callbackUrl: "/" })}>
               github
-            </Button>
+            </Button> */}
             <Button
               variant={"outline"}
               className="w-32"
@@ -82,13 +82,6 @@ export default function Login() {
               onClick={() => signIn("facebook", { callbackUrl: "/" })}
             >
               facebook
-            </Button>
-            <Button
-              variant={"outline"}
-              className="w-32"
-              onClick={() => signIn("instagram", { callbackUrl: "/" })}
-            >
-              instagram
             </Button>
           </div>
           <div className="flex w-full justify-around px-2">

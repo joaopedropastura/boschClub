@@ -10,15 +10,9 @@ interface Context {
   };
 }
 
-
 export async function GET( req : Request, context: Context): Promise<Response> {
   await connectMongoDB();
-
-  const url = new URL(req.url);
-  const email = url.searchParams.get("id");
-  console.log(url)
   const { params } = context;
-  
   try {
     const events = await Event.find({ "renter.email": params.id });
     if (events.length === 0) 

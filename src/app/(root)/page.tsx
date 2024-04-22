@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import Menu from "@/components/common/top-bar/top-bar";
 import ThemeSwitcher from "@/components/common/theme-switcher/theme-switcher";
 import ModalSchedules from "@/components/common/modal-schedules/modal-schedules";
+import Model3d from "@/components/common/model3d/model3d";
 export default async function HomePage() {
 
   const session = await getServerSession();
@@ -13,8 +14,8 @@ export default async function HomePage() {
 
   return (
     <div className="h-full flex flex-col items-center justify-center">
-
       <h1>home page</h1>
+      <Model3d />
     </div>
   );
 }

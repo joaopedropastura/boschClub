@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import mongoose, { Schema, model } from "mongoose";
 
 
 const partyPlaceSchema = new Schema({
@@ -8,4 +8,4 @@ const partyPlaceSchema = new Schema({
 })
 
 
-export default model('partyplace', partyPlaceSchema)
+export default mongoose.models.partyplace || model('partyplace', partyPlaceSchema)

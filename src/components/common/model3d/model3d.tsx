@@ -2,6 +2,8 @@
 
 import { Canvas } from '@react-three/fiber'
 import { useGLTF, Stage, PresentationControls } from '@react-three/drei';
+import { STLLoader } from 'three-stdlib';
+import { useLoader } from '@react-three/fiber';
 
 const Model = (props : any) => {
     const {scene} = useGLTF("./attmedia1.glb")

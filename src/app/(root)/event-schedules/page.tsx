@@ -1,7 +1,7 @@
 import verifySession from "@/actions/verify-session";
 import AvatarIcon from "@/components/common/avatar-icon/avatar";
 import CalendarItem from "@/components/common/calendar/calendar";
-import ModalHead from "@/components/common/modal-schedules/modal-head";
+import ModalHead from "@/components/common/modal-schedules/head";
 import ModalSchedules from "@/components/common/modal-schedules/modal-schedules";
 import React from "react";
 

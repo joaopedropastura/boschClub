@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import mongoose, { Schema, model } from "mongoose";
 
 
 const EventSchema = new Schema({
@@ -7,9 +7,10 @@ const EventSchema = new Schema({
     place: Object,
     // description: String,
     // people: Array<Object>,
-    // renter: Object,
+    renter: Object,
+    status: String,
     // additionals: Array<Object>,
 
 })
 
-export default model('event', EventSchema)
+export default mongoose.models.event || model('event', EventSchema);

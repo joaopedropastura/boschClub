@@ -1,7 +1,7 @@
 "use server";
 
 import verifySession from "./verify-session";
-import Event from "@/models/EventModel/event";
+import Event from "@/db-models/EventModel/event";
 
 
 type Event = {

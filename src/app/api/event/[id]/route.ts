@@ -2,7 +2,7 @@
 import connectMongoDB from "@/config/mongodb";
 import { NextApiRequest } from "next";
 import { NextResponse } from "next/server";
-import Event from "@/models/EventModel/event";
+import Event from "@/db-models/EventModel/event";
 
 interface Context {
   params: {

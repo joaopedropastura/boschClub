@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import connectMongoDB from "@/config/mongodb";
-import Event from "@/models/EventModel/event";
+import Event from "@/db-models/EventModel/event";
 import { NextApiRequest } from "next";
 
 export async function GET(): Promise<Response> {

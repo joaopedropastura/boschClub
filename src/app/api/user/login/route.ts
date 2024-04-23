@@ -1,6 +1,6 @@
 import { NextResponse, NextRequest } from "next/server";
 import connectMongoDB from "@/config/mongodb";
-import User from "@/models/user/user";
+import User from "@/db-models/user/user";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export async function POST(
@@ -10,6 +10,8 @@ export async function POST(
   await connectMongoDB();
   
   const data = await req.json();
+
+  console.log(data)
   if (!data.email || !data.password)
     return NextResponse.json({ message: "Email or password not provider" }, { status: 400 })
 

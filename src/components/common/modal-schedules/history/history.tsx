@@ -6,7 +6,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import UserCardSchedulesHistory from "./cardHistory";
+import UserCardSchedulesHistory from "../cardHistory";
 
 type EventModel = {
   _id: string;

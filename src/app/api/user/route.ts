@@ -1,6 +1,6 @@
 import { NextResponse, NextRequest } from "next/server";
 import connectMongoDB from "@/config/mongodb";
-import User from "@/models/user/user";
+import User from "@/db-models/user/user";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 type ResponseData = {

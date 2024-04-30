@@ -59,7 +59,7 @@ export default async function menu() {
         </li>
 
         <li className="flex align">
-          <Link href={"/event-schedules"}>
+          <Link href={"/record-schedules"}>
             <Image
                 
               src={Callendar}

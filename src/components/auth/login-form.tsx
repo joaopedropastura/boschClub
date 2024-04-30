@@ -1,5 +1,4 @@
 "use client";
-
 import * as z from "zod";
 import {
   Form,
@@ -13,22 +12,18 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-
-import { POST } from "@/app/api/user/route";
-import apiError from "@/app/api/error/api-error";
 import { CardWrapper } from "./card-wrapper";
-
-import { loginSchema } from "@/schemas/user";
+import { loginSchema } from "@/schemas/user-login";
 import { FormError } from "@/components/common/form-error";
 import { FormSuccess } from "@/components/common/form-success";
 import Login from "@/actions/login";
 import { useTransition, useState } from "react";
 
 export function LoginForm() {
-  const [isPending, startTransition ] = useTransition();
-
+  const [isPending, startTransition] = useTransition();
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -36,8 +31,7 @@ export function LoginForm() {
       password: "",
     },
   });
-
-  const onSubmit = async (values : z.infer<typeof loginSchema>) => {
+  const onSubmit = async (values: z.infer<typeof loginSchema>) => {
     setError("");
     setSuccess("");
 
@@ -48,9 +42,9 @@ export function LoginForm() {
           return;
         }
         setSuccess("login efetuado com sucesso");
-      })
-    })
-  }
+      });
+    });
+  };
 
   return (
     <CardWrapper
@@ -87,8 +81,8 @@ export function LoginForm() {
                 <FormItem>
                   <FormLabel>senha</FormLabel>
                   <FormControl>
-                    <Input 
-                      placeholder="******" 
+                    <Input
+                      placeholder="******"
                       type="password"
                       {...field}
                       disabled={isPending}
@@ -99,61 +93,13 @@ export function LoginForm() {
               )}
             />
           </div>
-              <FormError message={error} />
-              <FormSuccess message={success} />
-          <Button 
-            className="w-full" 
-            type="submit"
-            disabled={isPending}
-          >
+          <FormError message={error} />
+          <FormSuccess message={success} />
+          <Button className="w-full" type="submit" disabled={isPending}>
             entrar
           </Button>
         </form>
       </Form>
-      {/* <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(handleSubmit)}
-          className="max-w-md w-full flex flex-col gap-4"
-        >
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => {
-              return (
-                <FormItem>
-                  <FormLabel>endereço de email</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="endereço de email"
-                      type="email"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              );
-            }}
-          />
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => {
-              return (
-                <FormItem>
-                  <FormLabel>senha</FormLabel>
-                  <FormControl>
-                    <Input placeholder="senha" type="password" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              );
-            }}
-          />
-          <Button type="submit" className="w-full">
-            cadastrar
-          </Button>
-        </form>
-      </Form> */}
     </CardWrapper>
   );
 }

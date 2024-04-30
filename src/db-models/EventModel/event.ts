@@ -1,6 +1,5 @@
 import mongoose, { Schema, model } from "mongoose";
 
-
 const EventSchema = new Schema({
     name: String,
     date: String,

@@ -2,7 +2,7 @@
 
 import * as z from "zod";
 
-import { loginSchema } from "@/schemas/user";
+import { loginSchema } from "@/schemas/user-login";
 
 
 export default async function Login(values: z.infer<typeof loginSchema>) {

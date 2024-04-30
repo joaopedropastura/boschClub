@@ -14,7 +14,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { CardWrapper } from "./card-wrapper";
-import { registerSchema } from "@/schemas/user";
+import { registerSchema } from "@/schemas/user-login";
 import { FormError } from "@/components/common/form-error";
 import { FormSuccess } from "@/components/common/form-success";
 import RegisterUser from "@/actions/register-user";
@@ -43,6 +43,15 @@ export function RegisterForm() {
       RegisterUser(values).then((data) => {
         if (data.status === 500) {
           setError("verifique os dados");
+          return;
+        }
+
+        if (data.status === 400) {
+          if(data.data.message === "User already exists")
+            setError("usuário ja cadastrado");
+
+          if(data.data.message === "EDV already exists")
+            setError("EDV ja cadastrado");
           return;
         }
         setSuccess("cadastro efetuado com sucesso");

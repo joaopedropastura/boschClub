@@ -23,7 +23,6 @@ type Event = {
 export default async function UserSchedulesHistory() {
   const session = await verifySession();
 
-  console.log(session?.user?.email);
 
   const response = await fetch(
     `${process.env.URL}/api/event/${session?.user?.email}`

@@ -6,7 +6,7 @@ import { STLLoader } from 'three-stdlib';
 import { useLoader } from '@react-three/fiber';
 
 const Model = (props : any) => {
-    const {scene} = useGLTF("./QuadrasCompletas.glb")
+    const {scene} = useGLTF("./TestesDaArvore.glb")
 
 
     return <primitive object={scene} scale={0.01} {...props} />
@@ -15,7 +15,7 @@ const Model = (props : any) => {
 export default function Model3d() {
 
     return (
-        <Canvas dpr={[1,2]} shadows camera={{fov: 60}} className='w-[100vw] h-[100vh]' >
+        <Canvas dpr={[1,2]} shadows camera={{fov: 60}} className="h-full" >
             {/* <color attach="background" args={['#fff']} /> */}
             <ambientLight intensity={0.8} />
             <directionalLight position={[10, 10, 5]} intensity={1} />

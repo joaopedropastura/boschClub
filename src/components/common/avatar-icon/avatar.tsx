@@ -7,6 +7,7 @@ export default async function AvatarIcon(
 ) {
   const session = await verifySession();
 
+
   return (
     <Avatar className={`${style} `}>
       <AvatarImage src={`${session.user?.image}`} alt="@shadcn" />

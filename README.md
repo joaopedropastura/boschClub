@@ -22,3 +22,7 @@ como importar modelos 3d formato stl
 
     https://3dwarehouse.sketchup.com/?hl=pt-br
     https://app.sketchup.com/app
+
+
+
+    https://www.youtube.com/watch?v=PEMfsqZ2-As&ab_channel=GTCoding

@@ -11,7 +11,7 @@ export async function POST(
   
   const data = await req.json();
 
-  console.log(data)
+  
   if (!data.email || !data.password)
     return NextResponse.json({ message: "Email or password not provider" }, { status: 400 })
 

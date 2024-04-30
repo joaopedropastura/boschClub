@@ -3,10 +3,6 @@ import connectMongoDB from "@/config/mongodb";
 import User from "@/db-models/user/user";
 import type { NextApiRequest, NextApiResponse } from "next";
 
-type ResponseData = {
-  message: string
-}
-
 export async function GET(): Promise<Response> {
   await connectMongoDB();
 
@@ -17,15 +13,28 @@ export async function GET(): Promise<Response> {
 export async function POST(req: Request, res: NextApiResponse): Promise<Response> {
   await connectMongoDB();
   const data = await req.json();
-  console.log("DATA: "+ data)
   const user = {
     name: data.name,
     edv: data.edv,
     email: data.email,
-    password: data.password
+    password: data.password,
   }
   const newUser = new User( user );
   try {
+
+    if (!data.email || !data.password)
+      return NextResponse.json({ message: "Email or password not provider" }, { status: 400 })
+
+    const u = await User.findOne({ email: newUser.email });
+    if (u) {
+      return NextResponse.json({ message: "User already exists" }, { status: 400 });
+    }
+
+    const edv = await User.findOne({ edv: newUser.edv });
+    if (edv) {
+      return NextResponse.json({ message: "EDV already exists" }, { status: 400 });
+    }
+
     await newUser.save();
     return NextResponse.json({ message: "User created" }, {status: 201});
 

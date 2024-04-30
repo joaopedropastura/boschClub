@@ -1,6 +1,6 @@
 import * as z from "zod";
 
-import { registerSchema } from "@/schemas/user";
+import { registerSchema } from "@/schemas/user-login";
 
 export default async function RegisterUser(
   values: z.infer<typeof registerSchema>

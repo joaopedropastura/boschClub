@@ -1,14 +1,19 @@
+"use server"
+import bcrypt from "bcryptjs";
 import * as z from "zod";
 
-import { registerSchema } from "@/schemas/user-login";
+import { registerSchema } from "@/schemas/user";
 
 export default async function RegisterUser(
   values: z.infer<typeof registerSchema>
 ) {
+
+
+  const hashedPassword = await bcrypt.hash(values.password, 10);
   const newUser = {
     email: values.email,
     name: values.name,
-    password: values.password,
+    password: hashedPassword,
     edv: values.edv,
     authorized: false,
   };

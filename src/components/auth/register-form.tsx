@@ -14,7 +14,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { CardWrapper } from "./card-wrapper";
-import { registerSchema } from "@/schemas/user-login";
+import { registerSchema } from "@/schemas/user";
 import { FormError } from "@/components/common/form-error";
 import { FormSuccess } from "@/components/common/form-success";
 import RegisterUser from "@/actions/register-user";
@@ -41,6 +41,7 @@ export function RegisterForm() {
 
     startTransition(() => {
       RegisterUser(values).then((data) => {
+
         if (data.status === 500) {
           setError("verifique os dados");
           return;

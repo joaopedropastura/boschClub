@@ -5,7 +5,9 @@ const UserSchema = new Schema({
     name: String,
     email: String,
     password: String,
-    edv: String
+    edv: String,
+    isAuthtorized: Boolean,
+    photo: String
 })
 
-export default mongoose.models.user || model('user', UserSchema)  ;
+export default mongoose.models.user || model('user', UserSchema);

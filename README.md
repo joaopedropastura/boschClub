@@ -7,6 +7,11 @@ google auth
 https://console.cloud.google.com/apis/credentials?project=clubbosch
 
 
+facebook auth
+
+https://developers.facebook.com/apps/946958140244314/fb-login/settings/?use_case_enum=FB_LOGIN
+
+
 https://tympanus.net/codrops/2019/10/14/how-to-create-an-interactive-3d-character-with-three-js/
 
 
@@ -26,3 +31,11 @@ como importar modelos 3d formato stl
 
 
     https://www.youtube.com/watch?v=PEMfsqZ2-As&ab_channel=GTCoding
+
+
+
+prisma commands:
+
+-   reset structure of db = npx prisma genereate
+-   clear data in db = npx prisma migrate reset
+-   up new atributes to db = npx prisma db push

@@ -1,23 +1,19 @@
-"use client";
-
-import { signOut } from "next-auth/react";
+import { signOut } from "@/auth";
 import Image from "next/image";
 import Exit from "../../../../public/exit.svg";
 import { redirect } from "next/navigation";
 
 
-const logOut = () => {
-  signOut();  
-  redirect("/auth/login");
-
-
-}
-
-
 export default function BtnLogout() {
   return (
-    <button onClick={() => logOut()} style={{border: "none", backgroundColor: "#d1002300"}}>
-      Sair
-    </button>
+    <form
+      action={async () => {
+        "use server";
+
+        await signOut();
+      }}
+    >
+      <button type="submit">Sair</button>
+    </form>
   );
 }

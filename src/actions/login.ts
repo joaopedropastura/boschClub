@@ -1,26 +1,40 @@
-"use server"
+"use server";
 
 import * as z from "zod";
 
-import { loginSchema } from "@/schemas/user-login";
-
+import { signIn } from "@/auth";
+import { loginSchema } from "@/schemas/user";
+import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
+import { NextResponse } from "next/server";
+import { AuthError } from "next-auth";
 
 export default async function Login(values: z.infer<typeof loginSchema>) {
-  
-  
-  const response = await fetch(
-    `${process.env.URL}/api/user/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(values),
-    })
+  const validetedFields = loginSchema.safeParse(values);
 
-  const data = await response.json();
-  
-  return {
-    data: data,
-    status: response.status
-  };
+  if (!validetedFields.success)
+    return {error: "Email or password not provider"}
+
+  const { email, password } = validetedFields.data;
+
+  try {
+    await signIn("credentials", {
+      email,
+      password,
+      redirectTo: DEFAULT_LOGIN_REDIRECT,
+    });
+
+    return {success: "User found, an session was created"}
+
+  } catch (error) {
+    if (error instanceof AuthError) {
+      switch (error.type) {
+        case "CredentialsSignin":
+          return {error : "Invalid credentials"};
+        default:
+          return {error : "Something went wrong"};
+      }
+    }
+
+    throw error;
+  }
 }

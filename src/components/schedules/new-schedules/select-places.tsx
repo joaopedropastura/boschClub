@@ -25,7 +25,7 @@ export default function SelectPlaces() {
       setPlaces(data);
     }
     fetchData();
-  }, []);
+  }, [places]);
 
   return (
     <Select>
@@ -35,7 +35,7 @@ export default function SelectPlaces() {
       <SelectContent>
         <SelectGroup>
           <SelectLabel>Churrasqueiras</SelectLabel>
-          {places.map((place: PlaceModel, index: number) => (
+          {places && places.map((place: PlaceModel, index: number) => (
             <SelectItem 
               // <div>
               

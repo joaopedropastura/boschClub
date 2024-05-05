@@ -13,13 +13,17 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { CardWrapper } from "./card-wrapper";
-import { loginSchema } from "@/schemas/user-login";
+import { loginSchema } from "@/schemas/user";
 import { FormError } from "@/components/common/form-error";
 import { FormSuccess } from "@/components/common/form-success";
 import Login from "@/actions/login";
+import { useSearchParams } from "next/navigation";
 import { useTransition, useState } from "react";
 
 export function LoginForm() {
+  const searchParams = useSearchParams();
+  const urlError = searchParams.get("error") === "OAuthAccountNotLinked" ?
+    "Email já está sendo usado em outro provedor!" : "";
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
@@ -37,7 +41,7 @@ export function LoginForm() {
 
     startTransition(() => {
       Login(values).then((data) => {
-        if (data.status === 400 || data.status === 404 || data.status === 500) {
+        if (data.error) {
           setError("verifique o email e/ou a sua senha");
           return;
         }
@@ -93,7 +97,7 @@ export function LoginForm() {
               )}
             />
           </div>
-          <FormError message={error} />
+          <FormError message={error || urlError} />
           <FormSuccess message={success} />
           <Button className="w-full" type="submit" disabled={isPending}>
             entrar

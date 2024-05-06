@@ -13,38 +13,34 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { CardWrapper } from "./card-wrapper";
-import { loginSchema } from "@/schemas/user";
+import { newPasswordSchema } from "@/schemas/user";
 import { FormError } from "@/components/common/form-error";
 import { FormSuccess } from "@/components/common/form-success";
-import Login from "@/actions/login";
-import { useSearchParams } from "next/navigation";
 import { useTransition, useState } from "react";
-import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+import { newPassword } from "@/actions/new-password";
 
-export function LoginForm() {
+export function NewPasswordForm() {
+
   const searchParams = useSearchParams();
-  
-  const urlError = searchParams.get("error") === "OAuthAccountNotLinked" ?
-  "Email já está sendo usado em outro provedor!" : "";
-
+  const token = searchParams.get("token");
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
-  const form = useForm<z.infer<typeof loginSchema>>({
-    resolver: zodResolver(loginSchema),
+  const form = useForm<z.infer<typeof newPasswordSchema>>({
+    resolver: zodResolver(newPasswordSchema),
     defaultValues: {
-      email: "",
       password: "",
     },
   });
-  const onSubmit = async (values: z.infer<typeof loginSchema>) => {
+  const onSubmit = async (values: z.infer<typeof newPasswordSchema>) => {
     setError("");
     setSuccess("");
 
     startTransition(() => {
-      Login(values)
-      .then((data) => {
+      newPassword(values, token!)
+      .then((data ) => {
         setError(data?.error!);
         setSuccess(data?.success!);
       });
@@ -54,31 +50,16 @@ export function LoginForm() {
   return (
     <CardWrapper
       headerLabel="login"
-      backButtonLabel="ainda não tem uma conta?"
-      backButtonHref="/auth/register"
-      showSocial
+      backButtonLabel="voltar para o login"
+      backButtonHref="/auth/login"
     >
+      <div className="flex w-full justify-center mb-8">
+        <span>Digite a sua nova senha</span>
+
+      </div>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className={"space-y-6"}>
           <div className="space-y-4">
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>email</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="endereço de email"
-                      type="email"
-                      disabled={isPending}
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
             <FormField
               control={form.control}
               name="password"
@@ -89,27 +70,20 @@ export function LoginForm() {
                     <Input
                       placeholder="******"
                       type="password"
-                      {...field}
                       disabled={isPending}
+                      {...field}
                     />
                   </FormControl>
-                  <Button
-                    size="sm"
-                    variant="link"
-                    asChild
-                    className="px-0 font-normal"  
-                  >
-                    <Link href="/auth/reset">esqueceu sua senha?</Link>
-                  </Button>
                   <FormMessage />
                 </FormItem>
               )}
             />
+            
           </div>
-          <FormError message={error || urlError} />
+          <FormError message={error} />
           <FormSuccess message={success} />
           <Button className="w-full" type="submit" disabled={isPending}>
-            entrar
+            resetar senha
           </Button>
         </form>
       </Form>

@@ -8,6 +8,18 @@ export const userSchema = z.object({
     edv: z.string().min(8)
 })
 
+export const resetSchema = z.object({
+    email: z.string().email({
+        message: "email inválido"
+    }),
+})
+
+export const newPasswordSchema = z.object({
+    password: z.string().min(6, {
+        message: "a senha deve conter no mínimo 6 caracteres"
+    })
+})
+
 export const loginSchema = z.object({
     email: z.string().email({
         message: "email inválido"

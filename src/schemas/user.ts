@@ -27,6 +27,7 @@ export const loginSchema = z.object({
     password: z.string().min(3, {
         message: "senha inválida"
     }),
+    code: z.optional(z.string())
 })
 
 export const registerSchema = z.object({

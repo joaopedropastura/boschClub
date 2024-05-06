@@ -70,6 +70,9 @@ export function RegisterForm() {
       backButtonHref="/auth/login"
       showSocial
     >
+      <div className="flex w-full justify-center mb-8">
+        <span>crie uma conta</span>
+      </div>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className={"space-y-6"}>
           <div className="space-y-4">

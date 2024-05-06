@@ -4,6 +4,7 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import { db } from "@/lib/db";
 import { getUserById } from "@/data/user/user";
 import { UserRole } from "@prisma/client";
+import { getTwoFactorConfirmationById } from "./data/user/two-factor-confirmation";
 
 import { PrismaClient } from "@prisma/client";
 
@@ -33,19 +34,28 @@ export const {
     },
   },
   callbacks: {
-    async signIn({ user, account }){
-
-      console.log(user, account)
-      if(account?.provider !== "credentials") 
-        return true;
+    async signIn({ user, account }) {
+      console.log(user, account);
+      if (account?.provider !== "credentials") return true;
 
       const existingUser = await getUserById(user.id!);
-      if(!existingUser?.emailVerified)
-        return false;
+      if (!existingUser?.emailVerified) return false;
 
-      // add 2FA here
-      
-      return true
+      if (existingUser.isTwoFactorEnabled) {
+        const twoFactorConfirmation = await getTwoFactorConfirmationById(
+          user.id!
+        );
+
+        if (!twoFactorConfirmation) return false;
+
+        await db.twoFactorConfirmation.delete({
+          where: {
+            id: twoFactorConfirmation.id,
+          },
+        });
+      }
+
+      return true;
     },
 
     async session({ session, token }) {

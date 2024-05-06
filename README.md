@@ -39,3 +39,13 @@ prisma commands:
 -   reset structure of db = npx prisma genereate
 -   clear data in db = npx prisma migrate reset
 -   up new atributes to db = npx prisma db push
+
+
+
+https://resend.com/home
+
+
+
+NEON its a postgrees cloud db
+
+https://console.neon.tech/app

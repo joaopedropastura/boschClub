@@ -22,8 +22,10 @@ import { useTransition, useState } from "react";
 
 export function LoginForm() {
   const searchParams = useSearchParams();
+  
   const urlError = searchParams.get("error") === "OAuthAccountNotLinked" ?
-    "Email já está sendo usado em outro provedor!" : "";
+  "Email já está sendo usado em outro provedor!" : "";
+
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
@@ -40,12 +42,10 @@ export function LoginForm() {
     setSuccess("");
 
     startTransition(() => {
-      Login(values).then((data) => {
-        if (data.error) {
-          setError("verifique o email e/ou a sua senha");
-          return;
-        }
-        setSuccess("login efetuado com sucesso");
+      Login(values)
+      .then((data) => {
+        setError(data?.error!);
+        setSuccess(data?.success!);
       });
     });
   };

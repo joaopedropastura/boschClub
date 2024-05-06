@@ -33,13 +33,20 @@ export const {
     },
   },
   callbacks: {
-    // async signIn({ user }){
-    //   const existingUser = await getUserById(user.id);
-    //   if(!existingUser || !existingUser.emailVerified)
-    //     return false;
+    async signIn({ user, account }){
 
-    //   return true
-    // },
+      console.log(user, account)
+      if(account?.provider !== "credentials") 
+        return true;
+
+      const existingUser = await getUserById(user.id!);
+      if(!existingUser?.emailVerified)
+        return false;
+
+      // add 2FA here
+      
+      return true
+    },
 
     async session({ session, token }) {
       console.log({ sessionToken: token });

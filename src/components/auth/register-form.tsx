@@ -25,6 +25,7 @@ export function RegisterForm() {
 
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [reqEmail, setReqEmail] = useState("");
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
@@ -38,24 +39,26 @@ export function RegisterForm() {
   const onSubmit = async (values: z.infer<typeof registerSchema>) => {
     setError("");
     setSuccess("");
+    setReqEmail("");
 
     startTransition(() => {
       RegisterUser(values).then((data) => {
-
         if (data.status === 500) {
           setError("verifique os dados");
           return;
         }
-
         if (data.status === 400) {
-          if(data.data.message === "User already exists")
+          if (data.data.message === "User already exists")
             setError("usuário ja cadastrado");
 
-          if(data.data.message === "EDV already exists")
+          if (data.data.message === "EDV already exists")
             setError("EDV ja cadastrado");
           return;
         }
-        setSuccess("cadastro efetuado com sucesso");
+        if (data.status === 201) {
+          setSuccess("cadastro efetuado com sucesso");
+          setReqEmail("um email de confirmação foi enviado");
+        }
       });
     });
   };
@@ -145,6 +148,7 @@ export function RegisterForm() {
           </div>
           <FormError message={error} />
           <FormSuccess message={success} />
+          <FormSuccess message={reqEmail} />
           <Button className="w-full" type="submit" disabled={isPending}>
             criar conta
           </Button>

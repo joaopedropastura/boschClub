@@ -5,13 +5,14 @@ export const publicRoutes = [
     "/menu",
     "/api/user",
     "/api/party-places",
+    "/auth/new-verification",
     
 ]
 
 export const authRoutes = [
     "/auth/login",
     "/auth/register",
-    "/auth/error"
+    "/auth/error",
 ]
 
 

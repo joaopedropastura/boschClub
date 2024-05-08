@@ -6,6 +6,7 @@ export const publicRoutes = [
     "/api/user",
     "/api/party-places",
     "/auth/new-verification",
+    "api/auth/callback"
     
 ]
 

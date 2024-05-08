@@ -13,9 +13,9 @@ export default async function HomePage() {
     <div className="h-full flex flex-col items-center justify-center p-4">
       <div className="flex flex-row w-full">
         <div className="w-3/6">
-          <NewEvent>
+          {/* <NewEvent>
             <NewEventForm />
-          </NewEvent>
+          </NewEvent> */}
         </div>
         <div className="w-5/6 h-[60vh]">
           {/* <Model3d /> */}

@@ -20,7 +20,7 @@ export async function RegisterEvent(values: z.infer<typeof eventSchema>) {
   };
 
 
-  const response = await fetch(`${process.env.URI}/api/event`, {
+  const response = await fetch(`${process.env.URL}/api/event`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -38,7 +38,7 @@ export async function RegisterEvent(values: z.infer<typeof eventSchema>) {
 }
 
 export async function GetPlaces() {
-  const response = await fetch(`${process.env.URI}/api/party-places`, {
+  const response = await fetch(`${process.env.URL}/api/party-places`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

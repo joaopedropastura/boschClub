@@ -1,5 +1,4 @@
 import Width from "@/components/common/width/width";
-import Menu from "@/components/common/top-bar/top-bar";
 import ThemeSwitcher from "@/components/common/theme-switcher/theme-switcher";
 import ModalSchedules from "@/components/schedules/record/modal-schedules";
 import Model3d from "@/components/common/model3d/model3d";

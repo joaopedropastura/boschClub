@@ -21,12 +21,12 @@ import { CardContent } from "@/components/ui/card";
 import NewEventDataPicker from "@/components/schedules/new-schedules/datapicker";
 import SelectPlaces from "@/components/schedules/new-schedules/select-places";
 
-export default function newEventForm() {
+export default function NewEventForm() {
   const [isPending, startTransition] = useTransition();
 
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const [identity, setIdentity] = useState<string>("");
+  // const [identity, setIdentity] = useState<string>("");
   
   const form = useForm<z.infer<typeof eventSchema>>({
     resolver: zodResolver(eventSchema),
@@ -103,7 +103,7 @@ export default function newEventForm() {
           </div>
           <FormError message={error} />
           <FormSuccess message={success} />
-          <FormError message={identity} />
+          {/* <FormError message={identity} /> */}
           <Button className="w-full" type="submit" disabled={isPending}>
             criar evento
           </Button>

@@ -7,7 +7,7 @@ export default async function ProfilePage() {
 
     return (
         <main>
-            <ProfileCard />
+            <ProfileCard/>
         </main>
     );
 }

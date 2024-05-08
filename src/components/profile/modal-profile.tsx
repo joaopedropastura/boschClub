@@ -5,9 +5,7 @@ import FormIdConfirm from "@/components/profile/form-id-confirm";
 // import HistorySchedules from "./record";
 
 export default function ProfileCard({
-  children,
 }: {
-  children: React.ReactNode;
 }) {
   
   return (
@@ -16,7 +14,6 @@ export default function ProfileCard({
         Perfil
       </CardHeader>
       <CardContent>
-        {children}
         <FormIdConfirm />
       </CardContent>
     </Card>

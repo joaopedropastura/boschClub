@@ -5,6 +5,8 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import useCurrentUser from "@/hooks/use-current-user";
@@ -25,6 +27,9 @@ export default function UserButton() {
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-32" align="end">
+      <DropdownMenuLabel>Minha Conta</DropdownMenuLabel>
+      <DropdownMenuSeparator />
+
       <DropdownMenuItem>
           <User className="mr-2 h-4 w-4" />
           <Link href="/profile">

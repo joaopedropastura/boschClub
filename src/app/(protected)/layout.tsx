@@ -1,4 +1,3 @@
-import Menu from "@/components/common/top-bar/top-bar";
 import { NavBar } from "./_components/navbar";
 
 export default async function RootLayout({

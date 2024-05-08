@@ -10,9 +10,9 @@ export default async function AvatarIcon(
 
   return (
     <Avatar className={`${style} `}>
-      <AvatarImage src={`${session.user?.image}`} alt="@shadcn" />
+      <AvatarImage src={`${session?.user?.image}`} alt="@shadcn" />
       <AvatarFallback>
-        {session.user?.name && session?.user?.name[0]}
+        {session?.user?.name && session?.user?.name[0]}
       </AvatarFallback>
     </Avatar>
   );

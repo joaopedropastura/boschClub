@@ -18,7 +18,7 @@ export default async function RegisterUser(
     authorized: false,
   };
 
-  const response = await fetch(`${process.env.URL}/api/user`, {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/user`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

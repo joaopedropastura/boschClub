@@ -25,7 +25,7 @@ export default async function UserSchedulesHistory() {
 
 
   const response = await fetch(
-    `${process.env.URL}/api/event/${session?.user?.email}`
+    `${process.env.NEXT_PUBLIC_APP_URL}/api/event/${session?.user?.email}`
   );
 
   const data = await response.json();

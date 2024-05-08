@@ -3,6 +3,7 @@
 import * as z from "zod";
 
 import { eventSchema } from "@/schemas/event";
+const domain = process.env.NEXT_PUBLIC_APP_URL
 
 export async function RegisterEvent(values: z.infer<typeof eventSchema>) {
   
@@ -20,7 +21,7 @@ export async function RegisterEvent(values: z.infer<typeof eventSchema>) {
   };
 
 
-  const response = await fetch(`${process.env.URL}/api/event`, {
+  const response = await fetch(`${domain}/api/event`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -38,7 +39,7 @@ export async function RegisterEvent(values: z.infer<typeof eventSchema>) {
 }
 
 export async function GetPlaces() {
-  const response = await fetch(`${process.env.URL}/api/party-places`, {
+  const response = await fetch(`${domain}/api/party-places`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

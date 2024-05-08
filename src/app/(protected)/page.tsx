@@ -18,7 +18,7 @@ export default async function HomePage() {
           </NewEvent>
         </div>
         <div className="w-5/6 h-[60vh]">
-          <Model3d />
+          {/* <Model3d /> */}
         </div>
       </div>
     </div>

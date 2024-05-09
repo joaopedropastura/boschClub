@@ -4,7 +4,7 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import { db } from "@/lib/db";
 import { getUserById } from "@/data/user/user";
 import { UserRole } from "@prisma/client";
-import { getTwoFactorConfirmationById } from "./data/user/two-factor-confirmation";
+import { getTwoFactorConfirmationById } from "@/data/user/two-factor-confirmation";
 
 import { PrismaClient } from "@prisma/client";
 import getAccountById from "./data/user/account";
@@ -21,6 +21,8 @@ export const {
     signIn: "/auth/login",
     error: "/auth/error",
   },
+  // secret: process.env.NEXTAUTH_SECRET,
+
   events: {
     async linkAccount({ user }) {
       await db.user.update({

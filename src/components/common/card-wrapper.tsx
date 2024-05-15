@@ -25,7 +25,7 @@ export function CardWrapper({
   backButtonHref,
 }: CardWrapperProps) {
   return (
-    <Card className="w-[400px] shadow-md">
+    <Card className="w-full shadow-md">
       <CardHeader>
         <div className="flex w-full justify-center p-4">
             {headerLabel}

@@ -30,6 +30,7 @@ import {
 import RegisterPlace from "@/actions/place/register-place";
 import { GetTypeOfPlaces } from "@/actions/place/type-of-place";
 import { Checkbox } from "@/components/ui/checkbox";
+import { BackButton } from "../auth/back-button";
 type TypeOfPlaceModel = {
   id: string;
   name: string;
@@ -83,9 +84,6 @@ export function RegisterPlaceForm() {
       backButtonLabel=""
       backButtonHref="/auth/login"
     >
-      {/* <div className="flex w-full justify-center mb-8">
-        <span>crie um local</span>
-      </div> */}
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className={"space-y-6"}>
           <div className="space-y-4">
@@ -97,7 +95,7 @@ export function RegisterPlaceForm() {
                   <FormLabel>nome</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="de um nome ao local"
+                      placeholder="nomeie o local"
                       disabled={isPending}
                       {...field}
                     />
@@ -106,47 +104,45 @@ export function RegisterPlaceForm() {
                 </FormItem>
               )}
             />
-            {typeOfPlaces && (
-              <FormField
-                control={form.control}
-                name="type"
-                render={({ field }) => (
-                  <FormItem>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <SelectTrigger className="">
-                        <SelectValue placeholder="selecione um local" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectGroup>
-                          {typeOfPlaces.map((type, index) => (
-                            <SelectItem
-                              key={index}
-                              value={type.id}
-                              onClick={() => field.onChange(type.id)}
-                            >
-                              {type.name}
-                            </SelectItem>
-                          ))}
-                        </SelectGroup>
-                      </SelectContent>
-                    </Select>
+            <FormField
+              control={form.control}
+              name="type"
+              render={({ field }) => (
+                <FormItem>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <SelectTrigger className="">
+                      <SelectValue placeholder="selecione um local" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        {typeOfPlaces.map((type, index) => (
+                          <SelectItem
+                            key={index}
+                            value={type.id}
+                            onClick={() => field.onChange(type.id)}
+                          >
+                            {type.name}
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
 
-                    <div className="flex items-center space-x-2">
-                      <Checkbox id="terms" />
-                      <label
-                        htmlFor="terms"
-                        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                      >
-                        Criar mais uma modalidade?
-                      </label>
-                    </div>
-                  </FormItem>
-                )}
-              />
-            )}
+                  <div className="flex items-center space-x-2v w-full">
+                    <label
+                      htmlFor="terms"
+                      className="text-sm w-full font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                    >
+                      <BackButton href="/admin/new-type" label="Criar mais uma modalidade?" />
+                      
+                    </label>
+                  </div>
+                </FormItem>
+              )}
+            />
             <FormField
               control={form.control}
               name="maxCapacity"

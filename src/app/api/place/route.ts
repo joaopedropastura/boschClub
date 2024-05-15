@@ -3,9 +3,6 @@ import { db } from "@/lib/db";
 import { TypeOfPlace } from "@prisma/client";
 
 export async function GET(req: Request): Promise<Response> {
-
-
-  // const data = await  req.json();
   try {
     const places = await db.place.findMany();
     return NextResponse.json({ places }, { status: 200 });
@@ -17,12 +14,10 @@ export async function GET(req: Request): Promise<Response> {
 export async function POST(req: Request): Promise<Response> {
   const data = await req.json();
 
-  
-
   const place = {
     name: data.name,
-    type: data.type,
-    maxCapacity: data.maxCapacity,    
+    typeId: data.typeId,
+    maxCapacity: data.maxCapacity,
   };
 
   try {

@@ -36,7 +36,7 @@ como importar modelos 3d formato stl
 
 prisma commands:
 
--   reset structure of db = npx prisma genereate
+-   reset structure of db = npx prisma generate
 -   clear data in db = npx prisma migrate reset
 -   up new atributes to db = npx prisma db push
 

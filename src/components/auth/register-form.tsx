@@ -17,7 +17,7 @@ import { CardWrapper } from "./card-wrapper";
 import { registerSchema } from "@/schemas/user";
 import { FormError } from "@/components/common/form-error";
 import { FormSuccess } from "@/components/common/form-success";
-import RegisterUser from "@/actions/register-user";
+import RegisterUser from "@/actions/user/register-user";
 import { useTransition, useState } from "react";
 
 export function RegisterForm() {

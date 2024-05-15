@@ -15,17 +15,19 @@ import { Button } from "@/components/ui/button";
 import { eventSchema } from "@/schemas/event";
 import { FormError } from "@/components/common/form-error";
 import { FormSuccess } from "@/components/common/form-success";
-import { RegisterEvent } from "@/actions/event";
-import { useTransition, useState } from "react";
+import { RegisterEvent } from "@/actions/event/event";
+import { useTransition, useState, use } from "react";
 import { CardContent } from "@/components/ui/card";
 import NewEventDataPicker from "@/components/schedules/new-schedules/datapicker";
 import SelectPlaces from "@/components/schedules/new-schedules/select-places";
+import useCurrentUser from "@/hooks/use-current-user";
 
 export default function NewEventForm() {
   const [isPending, startTransition] = useTransition();
 
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const userId = useCurrentUser();
   // const [identity, setIdentity] = useState<string>("");
   
   const form = useForm<z.infer<typeof eventSchema>>({
@@ -33,14 +35,8 @@ export default function NewEventForm() {
     defaultValues: {
       name: "",
       date: new Date(),
-      place: {
-        name: "",
-        maxPeople: 0,
-      },
-      renter: {
-        name: "",
-        email: "",
-      },
+      placeId: "",
+      renterId: "",
     }
   });
 
@@ -49,6 +45,7 @@ export default function NewEventForm() {
     setSuccess("");
 
     startTransition(() => {
+      values.renterId = userId?.id.toString()!;
       RegisterEvent(values).then((data) => {
         if (data.status === 500) {
           setError("verifique os dados");
@@ -93,17 +90,16 @@ export default function NewEventForm() {
             />
             <FormField
               control={form.control}
-              name="date"
+              name="placeId"
               render={({ field }) => (
                 <FormItem>
-                  <SelectPlaces />
+                  <SelectPlaces {...field} />
                 </FormItem>
               )}
             />
           </div>
           <FormError message={error} />
           <FormSuccess message={success} />
-          {/* <FormError message={identity} /> */}
           <Button className="w-full" type="submit" disabled={isPending}>
             criar evento
           </Button>

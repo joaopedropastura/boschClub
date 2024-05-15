@@ -18,7 +18,7 @@ import { FormError } from "@/components/common/form-error";
 import { FormSuccess } from "@/components/common/form-success";
 import { useTransition, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { newPassword } from "@/actions/new-password";
+import { newPassword } from "@/actions/user/new-password";
 
 export function NewPasswordForm() {
 

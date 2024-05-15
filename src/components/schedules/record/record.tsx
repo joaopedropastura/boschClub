@@ -8,23 +8,9 @@ import {
 } from "@/components/ui/accordion";
 import UserCardSchedulesRecord from "./card-record";
 
-type EventModel = {
-  _id: string;
-  name: string;
-  date: string;
-  place: {
-    name: string;
-    maxPeople: number;
-  };
-  renter: {
-    name: string;
-    email: string;
-  };
-  avaliable: boolean;
-};
-
 export default async function HistorySchedules() {
   const data = await UserSchedulesHistory();
+  console.log(data);
   return (
     <Accordion type="single" collapsible className="w-full">
       <AccordionItem value="item-1">

@@ -15,7 +15,7 @@ import { Button } from "@/components/ui/button";
 import { userSchema } from "@/schemas/user";
 import { FormError } from "@/components/common/form-error";
 import { FormSuccess } from "@/components/common/form-success";
-import { RegisterEvent } from "@/actions/event";
+import { RegisterEvent } from "@/actions/event/event";
 import { useTransition, useState, useEffect } from "react";
 import { CardContent } from "@/components/ui/card";
 import NewEventDataPicker from "@/components/schedules/new-schedules/datapicker";

@@ -12,6 +12,12 @@ enum UserRole {
   ADMIN
 }
 
+enum TypeOfPlace {
+  FIELD
+  BARBECUE
+  COURT
+}
+
 model User {
   id            String    @id @default(cuid())
   name          String?
@@ -20,13 +26,56 @@ model User {
   image         String?
   password      String?
   edv           String?
+  cpf           String?
   role          UserRole @default(USER)
   accounts      Account[]
   isTwoFactorEnabled Boolean @default(false)
   twoFactorConfirmation TwoFactorConfirmation?
+  posts         Post[]
+  events        Event[]
  
   @@map("users")
 }
+
+model Place {
+  id   String @id @default(cuid())
+  name String
+  type TypeOfPlace
+  maxCapacity Int
+  events Event[]
+
+  @@map("places")
+}
+
+model Event {
+  id      String   @id @default(cuid())
+  name    String
+  date    DateTime
+  placeId String   @map("place_id")
+  place   Place    @relation(fields: [placeId], references: [id])
+  renter User      @relation(fields: [renterId], references: [id])
+  renterId String  @map("renter_id")
+
+
+  @@unique([placeId, renterId])
+
+  @@map("events")
+}
+
+
+
+model Post{
+  id String @id @default(cuid())
+  title String
+  content String
+  published Boolean @default(false)
+  authorId String @map("author_id")
+  author User @relation(fields: [authorId], references: [id])
+
+  @@map("posts")
+}
+
+
 
 model Account {
   id                 String  @id @default(cuid())

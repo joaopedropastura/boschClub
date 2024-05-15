@@ -1,3 +1,5 @@
+"use server";
+
 import UserSchedulesHistory from "@/actions/user-history-schedules";
 import {
   Card,
@@ -20,11 +22,11 @@ type EventModel = {
     name: string;
     email: string;
   };
-  avaliable: boolean;
 };
 
 export default async function UserCardSchedulesHistory() {
   const data = await UserSchedulesHistory();
+
 
   return data.map((event: EventModel, index: number) => (
     <Card key={index}>

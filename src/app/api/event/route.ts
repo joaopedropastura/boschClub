@@ -1,55 +1,43 @@
-import { NextResponse } from "next/server";
-import connectMongoDB from "@/config/mongodb";
-import Event from "@/db-models/EventModel/event";
-import { NextApiRequest } from "next";
+import { NextResponse, NextRequest } from "next/server";
+import type { NextApiRequest, NextApiResponse } from "next";
+import { db } from "@/lib/db";
+import { getPlaceById } from "@/data/place/place";
+
+
+type Event = {
+  name: string;
+  type: string;
+  date: Date;
+  placeId: string;
+  userId: string;
+};
+
 
 export async function GET(): Promise<Response> {
-  await connectMongoDB();
 
   try {
-    const events = await Event.find();
+    const events = await db.event.findMany();
     return NextResponse.json({ events }, { status: 200 });
   } catch (error) {
     return NextResponse.json({ message: "Error: " + error }, { status: 500 });
   }
 }
 
-type Event = {
-  name: string;
-  date: string;
-  place: {
-    name: string;
-    maxPeople: number;
-  };
-  renter: {
-    name: string;
-    email: string;
-  };
-  status: string;
-  // description: string;
-  // people: Array<object>;
-  // additionals: Array<object>;
-
-};
 
 export async function POST(req: Request): Promise<Response> {
-  await connectMongoDB();
   const data = await req.json();
 
-  const newEvent: Event = {
+  const newEvent = {
     name: data.name,
     date: data.date,
-    place: data.place,
-    renter: data.renter,
-    status: data.status,
-    // description: data.description,
-    // people: data.people,
-    // additionals: data.additionals,
+    placeId: data.placeId,   
+    renterId: data.renterId
   };
-  const event = new Event(newEvent);
 
   try {
-    await event.save();
+    await db.event.create({
+      data: newEvent,
+    });
     return NextResponse.json({ message: "Event created" }, { status: 201 });
   } catch (error) {
     return NextResponse.json({ message: "Error: " + error }, { status: 500 });

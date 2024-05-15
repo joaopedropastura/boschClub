@@ -16,7 +16,7 @@ import { CardWrapper } from "./card-wrapper";
 import { loginSchema } from "@/schemas/user";
 import { FormError } from "@/components/common/form-error";
 import { FormSuccess } from "@/components/common/form-success";
-import Login from "@/actions/login";
+import Login from "@/actions/user/login";
 import { useSearchParams } from "next/navigation";
 import { useTransition, useState } from "react";
 import Link from "next/link";

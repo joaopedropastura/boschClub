@@ -1,8 +1,9 @@
 "use server";
-import connectMongoDB from "@/config/mongodb";
-import { NextApiRequest } from "next";
 import { NextResponse } from "next/server";
-import Event from "@/db-models/EventModel/event";
+import { db } from "@/lib/db";
+import { getEventByRenterId } from "@/data/event/event";
+import { getPlaceById } from "@/data/place/place";
+import { getUserById } from "@/data/user/user";
 
 interface Context {
   params: {
@@ -11,13 +12,40 @@ interface Context {
 }
 
 export async function GET( req : Request, context: Context): Promise<Response> {
-  await connectMongoDB();
   const { params } = context;
   try {
-    const events = await Event.find({ "renter.email": params.id });
-    if (events.length === 0) 
+    const events = await getEventByRenterId(params.id)
+    if (!events) 
       return NextResponse.json({ message: "No events found" }, { status: 404 });
-    return NextResponse.json({ events }, { status: 200 });
+
+
+    const eventsWithPlace = await Promise.all(
+      events.map(async (event) => {
+        const place = await getPlaceById(event.placeId)
+        return { 
+          ...event, 
+          place: {
+            name: place?.name,
+            maxCapacity: place?.maxCapacity
+          }, 
+        }
+      }));
+
+    const eventsWithRenter = await Promise.all(
+      eventsWithPlace.map(async (event) => {
+        const renter = await getUserById(event.renterId)
+        return { 
+          ...event, 
+          renter: {
+            name: renter?.name,
+            email: renter?.email
+          }, 
+        }
+      }));
+
+
+
+    return NextResponse.json({ eventsWithRenter }, { status: 200 });
   } catch (error) {
     return NextResponse.json({ message: "Error: " + error }, { status: 500 });
   }

@@ -13,6 +13,5 @@ export default async function admin() {
     }
 
     return { error: "não autorizado"}
-
     
 }

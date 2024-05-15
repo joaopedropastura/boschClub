@@ -6,8 +6,11 @@ export const publicRoutes = [
     "/api/user",
     "/api/party-places",
     "/auth/new-verification",
-    "api/auth/callback"
-    
+    "api/auth/callback",
+    "/api/place",
+    "/api/event",
+    "/record-shedule",
+    "/api/event/joaopedropastura@gmail.com"
 ]
 
 export const authRoutes = [
@@ -19,6 +22,6 @@ export const authRoutes = [
 ]
 
 
-export const apiAuthPrefix = "/api/auth"
+export const apiAuthPrefix = "/api"
 
-export const DEFAULT_LOGIN_REDIRECT = "/settings"
+export const DEFAULT_LOGIN_REDIRECT = "/"

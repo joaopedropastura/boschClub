@@ -7,7 +7,7 @@ export default async function RootLayout({
 }>) {
 
   return (
-      <div className="h-full w-full flex flex-col items-center justify-center">
+      <div className="h-full w-full flex flex-col items-center p-4">
         {/* <Menu /> */}
         <NavBar />
         {children}

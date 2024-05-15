@@ -71,6 +71,7 @@ export const {
         session.user.name = token.name!;
         session.user.email = token.email!;
         session.user.isOauth = token.isOAuth! as boolean;
+        session.user.id = token.sub!;
       }
 
       return session;

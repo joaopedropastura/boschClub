@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import useCurrentUser from "@/hooks/use-current-user";
 import LogOutButton from "@/components/auth/logout-button";
-import { LogOut, User } from "lucide-react";
+import { LogOut, User, CalendarFold } from "lucide-react";
 import Link from "next/link";
 
 export default function UserButton() {
@@ -26,7 +26,7 @@ export default function UserButton() {
           </AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-32" align="end">
+      <DropdownMenuContent className="" align="end">
       <DropdownMenuLabel>Minha Conta</DropdownMenuLabel>
       <DropdownMenuSeparator />
 
@@ -34,6 +34,12 @@ export default function UserButton() {
           <User className="mr-2 h-4 w-4" />
           <Link href="/profile">
             <span>Perfil</span>
+          </Link>
+        </DropdownMenuItem>
+      <DropdownMenuItem>
+          <CalendarFold className="mr-2 h-4 w-4" />
+          <Link href="/schedules">
+            <span>Agendamentos</span>
           </Link>
         </DropdownMenuItem>
         <LogOutButton>

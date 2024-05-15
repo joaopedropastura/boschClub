@@ -9,43 +9,50 @@ import {
 } from "@/components/ui/select";
 
 import { useEffect, useState } from "react";
-import { GetPlaces } from "@/actions/places";
+import { GetPlaces } from "@/actions/place/places";
+import { ControllerRenderProps } from "react-hook-form";
+import { eventSchema } from "@/schemas/event";
+import * as z from "zod";
+import { FormControl } from "@/components/ui/form";
 
 type PlaceModel = {
-  _id: string;
+  id: string;
   name: string;
-  maxPeople: number;
+  maxCapacity: number;
+  type: string;
 };
 
-export default function SelectPlaces() {
+export default function SelectPlaces(
+  field: ControllerRenderProps<z.infer<typeof eventSchema>>
+) {
   const [places, setPlaces] = useState<PlaceModel[]>([]);
   useEffect(() => {
     async function fetchData() {
       const data = await GetPlaces();
       setPlaces(data);
+      // console.log(places);
     }
     fetchData();
-  }, [places]);
+  }, []);
 
   return (
-    <Select>
-      <SelectTrigger className="w-[180px]">
-        <SelectValue placeholder="Selecione o local" />
-      </SelectTrigger>
+
+    <Select onValueChange={field.onChange} defaultValue={field.value ? field.value.toString() : undefined}>
+      <FormControl>
+        <SelectTrigger className="">
+          <SelectValue placeholder="Selecione o local" />
+        </SelectTrigger>
+      </FormControl>
+
       <SelectContent>
         <SelectGroup>
-          <SelectLabel>Churrasqueiras</SelectLabel>
-          {places && places.map((place: PlaceModel, index: number) => (
-            <SelectItem 
-              // <div>
-              
-              // </div>
-              key={index} 
-              value={place.name}
-              // className="flex bg-red justify-between"
+          {places.map((place, index) => (
+            <SelectItem
+              key={index}
+              value={place.id}
+              onClick={() => field.onChange(place.id)} // Passa o ID do lugar para o react-hook-form
             >
-              {place.name}
-              {place.maxPeople}
+              {place.name} (Capacidade: {place.maxCapacity})
             </SelectItem>
           ))}
         </SelectGroup>

@@ -10,14 +10,8 @@ export async function RegisterEvent(values: z.infer<typeof eventSchema>) {
     const newEvent = {
       name: values.name,
       date: values.date,
-    place: {
-      name: values.place.name,
-      maxPeople: values.place.maxPeople,
-    },
-    renter: {
-      name: values.renter.name,
-      email: values.renter.email,
-    }
+      placeId: values.placeId,
+      renterId: values.renterId
   };
 
 

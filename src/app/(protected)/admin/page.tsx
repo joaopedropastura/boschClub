@@ -1,6 +1,7 @@
 "use client";
 
-import admin from "@/actions/admin";
+import admin from "@/actions/user/admin";
+import CreateEvent from "@/components/admin/create-event";
 import { RoleGate } from "@/components/auth/role-gate";
 import { FormSuccess } from "@/components/common/form-success";
 import { Button } from "@/components/ui/button";
@@ -35,7 +36,7 @@ export default function AdminPage() {
   }
 
   return (
-    <Card className="w-11/12">
+    <Card className="w-full">
       <CardHeader>
         <span className="text-2xl font-semibold text-center">Admin</span>
       </CardHeader>
@@ -53,6 +54,8 @@ export default function AdminPage() {
           <span className="text-sm font-medium">adm api server action</span>
           <Button onClick={onServerActionClick}>Click to test</Button>
         </div>
+
+        <CreateEvent />
       </CardContent>
     </Card>
   );

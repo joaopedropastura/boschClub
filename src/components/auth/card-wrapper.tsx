@@ -17,6 +17,7 @@ interface CardWrapperProps {
   backButtonLabel: string;
   backButtonHref: string;
   showSocial?: boolean;
+  hiddenLogo?: boolean;
 }
 
 export function CardWrapper({
@@ -25,18 +26,23 @@ export function CardWrapper({
   backButtonLabel,
   backButtonHref,
   showSocial,
+  hiddenLogo = false,
 }: CardWrapperProps) {
   return (
     <Card className="w-[400px] shadow-md">
       <CardHeader>
-        <div className="flex self-center">
-          <Image
-            src={ClubeBoschLogo}
-            alt={"icone do clube bosch"}
-            height={92}
-            width={92}
-          ></Image>
-        </div>
+        {
+          !hiddenLogo && (
+            <div className="flex self-center">
+              <Image
+                src={ClubeBoschLogo}
+                alt={"icone do clube bosch"}
+                height={92}
+                width={92}
+              ></Image>
+            </div>
+          )
+        }
       </CardHeader>
 
       <CardContent>{children}</CardContent>

@@ -6,7 +6,6 @@ import { getVerificationTokenByToken } from "@/data/user/verification-token";
 
 export const newVerification = async (token: string) => {
   const existingToken = await getVerificationTokenByToken(token);
-  console.log(token)
   if (!existingToken) 
     return { error: "Token não encontrado" };
 

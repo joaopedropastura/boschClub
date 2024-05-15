@@ -22,6 +22,7 @@ type PlaceModel = {
   type: string;
 };
 
+
 export default function SelectPlaces(
   field: ControllerRenderProps<z.infer<typeof eventSchema>>
 ) {
@@ -29,8 +30,8 @@ export default function SelectPlaces(
   useEffect(() => {
     async function fetchData() {
       const data = await GetPlaces();
+
       setPlaces(data);
-      // console.log(places);
     }
     fetchData();
   }, []);

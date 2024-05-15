@@ -38,7 +38,7 @@ export default function UserButton() {
         </DropdownMenuItem>
       <DropdownMenuItem>
           <CalendarFold className="mr-2 h-4 w-4" />
-          <Link href="/schedules">
+          <Link href="/record-schedules">
             <span>Agendamentos</span>
           </Link>
         </DropdownMenuItem>

@@ -29,3 +29,19 @@ export const getEventByRenterId = async (id: string) => {
     return null;
   }
 }
+
+
+export const getEventByDate = async (date: Date) => {
+  try {
+    const events = await db.event.findMany({
+      where: {
+        date: date,
+      },
+    });
+
+    return events;
+  } catch (error) {
+    console.error("Error getting place by id", error);
+    return null;
+  }
+}

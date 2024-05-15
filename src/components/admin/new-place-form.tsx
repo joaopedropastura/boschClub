@@ -17,7 +17,7 @@ import { CardWrapper } from "@/components/common/card-wrapper";
 import { registerPlaceSchema } from "@/schemas/place";
 import { FormError } from "@/components/common/form-error";
 import { FormSuccess } from "@/components/common/form-success";
-import { useTransition, useState } from "react";
+import { useTransition, useState, useEffect } from "react";
 import {
   Select,
   SelectContent,
@@ -28,12 +28,28 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import RegisterPlace from "@/actions/place/register-place";
+import { GetTypeOfPlaces } from "@/actions/place/type-of-place";
+import { Checkbox } from "@/components/ui/checkbox";
+type TypeOfPlaceModel = {
+  id: string;
+  name: string;
+};
 
 export function RegisterPlaceForm() {
   const [isPending, startTransition] = useTransition();
 
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [typeOfPlaces, setTypeOfPlaces] = useState<TypeOfPlaceModel[]>([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      const data = await GetTypeOfPlaces();
+      setTypeOfPlaces(data);
+    }
+    fetchData();
+  }, []);
+
   const form = useForm<z.infer<typeof registerPlaceSchema>>({
     resolver: zodResolver(registerPlaceSchema),
     defaultValues: {
@@ -90,31 +106,47 @@ export function RegisterPlaceForm() {
                 </FormItem>
               )}
             />
-            <FormField
-              control={form.control}
-              name="type"
-              render={({ field }) => (
-                <FormItem>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
-                    <SelectTrigger className="">
-                      <SelectValue placeholder="selecione um local" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectGroup>
-                        <SelectItem value="churrasqueira">
-                          Churrasqueira
-                        </SelectItem>
-                        <SelectItem value="campo">Campo</SelectItem>
-                        <SelectItem value="quadra">Quadra</SelectItem>
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
-                </FormItem>
-              )}
-            />
+            {typeOfPlaces && (
+              <FormField
+                control={form.control}
+                name="type"
+                render={({ field }) => (
+                  <FormItem>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <SelectTrigger className="">
+                        <SelectValue placeholder="selecione um local" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectGroup>
+                          {typeOfPlaces.map((type, index) => (
+                            <SelectItem
+                              key={index}
+                              value={type.id}
+                              onClick={() => field.onChange(type.id)}
+                            >
+                              {type.name}
+                            </SelectItem>
+                          ))}
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+
+                    <div className="flex items-center space-x-2">
+                      <Checkbox id="terms" />
+                      <label
+                        htmlFor="terms"
+                        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                      >
+                        Criar mais uma modalidade?
+                      </label>
+                    </div>
+                  </FormItem>
+                )}
+              />
+            )}
             <FormField
               control={form.control}
               name="maxCapacity"

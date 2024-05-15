@@ -26,7 +26,8 @@ export async function GET( req : Request, context: Context): Promise<Response> {
           ...event, 
           place: {
             name: place?.name,
-            maxCapacity: place?.maxCapacity
+            maxCapacity: place?.maxCapacity,
+            type: place?.type
           }, 
         }
       }));

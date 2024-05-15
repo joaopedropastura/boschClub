@@ -27,18 +27,28 @@ type EventModel = {
 export default async function UserCardSchedulesHistory() {
   const data = await UserSchedulesHistory();
 
-
-  return data.map((event: EventModel, index: number) => (
+  function formatDate(dateString : string) {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1; 
+    const day = date.getDate();
+  
+    const formattedMonth = month < 10 ? `0${month}` : month;
+    const formattedDay = day < 10 ? `0${day}` : day;
+  
+    return `${formattedDay}/${formattedMonth}/${year}`;
+  }
+  console.log(data.eventsWithRenter);
+  return data.eventsWithRenter.map((event: EventModel, index: number) => (
     <Card key={index}>
-      <CardHeader>
+      <CardHeader className="pt-4 pl-4 pr-4 pb-0 flex justify-center">
         <CardTitle className="text-lg">{event.place.name}</CardTitle>
-        <CardDescription></CardDescription>
       </CardHeader>
       <CardContent className="flex h-20 gap-16 p-4 w-full">
-        <div className="w-4/5">{event.name}</div>
-        <div className=" flex flex-row gap-4 items-center">
+        <div className="flex flex-row gap-4 items-center justify-center">{event.name}</div>
+        <div className="flex flex-row gap-4 items-center justify-center">
           <Separator orientation="vertical" />
-          <div className="">{event.date}</div>
+          <div className="">{formatDate(event.date)}</div>
         </div>
       </CardContent>
     </Card>

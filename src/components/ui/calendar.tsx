@@ -7,14 +7,30 @@ import { DayPicker } from "react-day-picker"
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
 
-export type CalendarProps = React.ComponentProps<typeof DayPicker>
+export type CalendarProps = React.ComponentProps<typeof DayPicker> & {
+  events?: Array<{ date: string }>
+}
 
 function Calendar({
   className,
   classNames,
+  events = [],
   showOutsideDays = true,
   ...props
 }: CalendarProps) {
+
+  const modifiers = {
+    eventDay: events.map(event => new Date(event.date))
+  };
+
+  const modifiersStyles = {
+    eventDay: {
+      color: 'white',
+      backgroundColor: 'green'
+    }
+  };
+
+
   return (
     <DayPicker
       showOutsideDays={showOutsideDays}
@@ -52,12 +68,16 @@ function Calendar({
           "aria-selected:bg-accent aria-selected:text-accent-foreground",
         day_hidden: "invisible",
         
+        
         ...classNames,
       }}
       components={{
         IconLeft: ({ ...props }) => <ChevronLeft className="h-4 w-4" />,
         IconRight: ({ ...props }) => <ChevronRight className="h-4 w-4" />,
       }}
+      modifiers={modifiers}
+      modifiersStyles={modifiersStyles}
+
       {...props}
     />
   )

@@ -15,5 +15,6 @@ export default async function UserSchedulesHistory() {
   );
 
   const data = await response.json();
-  return data.events;
+
+  return data;
 }

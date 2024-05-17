@@ -15,6 +15,21 @@ export const getPlaceById = async (id: string) => {
   }
 };
 
+export const getPlacesByTypeId = async (typeId: string) => {
+  try {
+    const places = await db.place.findMany({
+      where: {
+        typeId: typeId,
+      },
+    });
+
+    return places;
+  } catch (error) {
+    console.error("Error getting places by type id", error);
+    return null;
+  }
+}
+
 export const createPlace = async (data: any) => {
   const place = {
     name: data.name,

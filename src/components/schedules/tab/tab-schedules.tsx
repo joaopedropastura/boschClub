@@ -12,24 +12,9 @@ import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import NewEventForm from "../new-schedules/form-event";
 import NewEvent from "@/components/schedules/new-schedules/modal-schedules";
-import EventList from "@/components/schedules/event-list";
+import EventTypeOfList from "@/components/schedules/event-type-of-list";
 
 export default function TabSchedules() {
-  //   const [events, setEvents] = useState([]);
-  //   const [date, setDate] = useState<Date | undefined>(new Date());
-
-  //   useEffect(() => {
-  //     const fetchData = async () => {
-  //       const data = await UserSchedulesHistory();
-  //       setEvents(
-  //         data.eventsWithRenter.map((e: { date: Date; type: String }) => ({
-  //           date: e.date,
-  //           type: e.type,
-  //         }))
-  //       );
-  //     };
-  //     fetchData();
-  //   }, []);
 
   return (
     <Tabs defaultValue="account" className="w-full">
@@ -39,31 +24,8 @@ export default function TabSchedules() {
       </TabsList>
       <TabsContent value="makeSchedule">
         <NewEvent>
-            <EventList />
+            <EventTypeOfList />
         </NewEvent>
-
-
-        {/* <Card>
-          <CardHeader>
-            <CardTitle>Account</CardTitle>
-            <CardDescription>
-              Make changes to your account here. Click save when you're done.
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-2">
-            <div className="space-y-1">
-              <Label htmlFor="name">Name</Label>
-              <Input id="name" defaultValue="Pedro Duarte" />
-            </div>
-            <div className="space-y-1">
-              <Label htmlFor="username">Username</Label>
-              <Input id="username" defaultValue="@peduarte" />
-            </div>
-          </CardContent>
-          <CardFooter>
-            <Button>Save changes</Button>
-          </CardFooter>
-        </Card> */}
       </TabsContent>
       <TabsContent value="recordSchedules">
         <Card>

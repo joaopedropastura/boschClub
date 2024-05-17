@@ -11,17 +11,17 @@ export default async function HomePage() {
 
 
   return (
-    <div className="h-full flex flex-col items-center justify-center p-4">
-      <div className="flex flex-row w-full">
+    <div className="h-full flex flex-row w-full">
+      <div className="flex flex-col w-full">
         <div className="w-full">
           {/* <NewEvent>
             <NewEventForm />
           </NewEvent> */}
           <TabSchedules />
         </div>
+          {/* <Model3d /> */}
 
         {/* <div className="w-5/6 h-[60vh]">
-          <Model3d />
         </div> */}
       </div>
     </div>

@@ -17,6 +17,7 @@ type EventModel = {
   place: {
     name: string;
     maxPeople: number;
+    typeName: string;
   };
   renter: {
     name: string;
@@ -42,7 +43,7 @@ export default async function UserCardSchedulesHistory() {
   return data.eventsWithRenter.map((event: EventModel, index: number) => (
     <Card key={index}>
       <CardHeader className="pt-4 pl-4 pr-4 pb-0 flex justify-center">
-        <CardTitle className="text-lg">{event.place.name}</CardTitle>
+        <CardTitle className="text-lg">{event.place.typeName} - {event.place.name}</CardTitle>
       </CardHeader>
       <CardContent className="flex h-20 gap-16 p-4 w-full">
         <div className="flex flex-row gap-4 items-center justify-center">{event.name}</div>

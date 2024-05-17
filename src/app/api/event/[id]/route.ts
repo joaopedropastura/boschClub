@@ -27,13 +27,25 @@ export async function GET( req : Request, context: Context): Promise<Response> {
           place: {
             name: place?.name,
             maxCapacity: place?.maxCapacity,
-            type: place?.type
+            type: place?.typeId
           }, 
         }
       }));
 
-    const eventsWithRenter = await Promise.all(
+    const eventsWithPlaceType = await Promise.all(
       eventsWithPlace.map(async (event) => {
+        const placeType = await getPlaceById(event.place.type!)
+        return { 
+          ...event, 
+          place: {
+            ...event.place,
+            typeName: placeType?.name
+          }, 
+        }
+      }))
+
+    const eventsWithRenter = await Promise.all(
+      eventsWithPlaceType.map(async (event) => {
         const renter = await getUserById(event.renterId)
         return { 
           ...event, 

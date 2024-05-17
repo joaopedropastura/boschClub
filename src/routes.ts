@@ -10,7 +10,6 @@ export const publicRoutes = [
     "/api/place",
     "/api/event",
     "/record-shedule",
-    "/api/event/joaopedropastura@gmail.com"
 ]
 
 export const authRoutes = [

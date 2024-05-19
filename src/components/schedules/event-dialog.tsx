@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/collapsible";
 import { Ham } from "lucide-react";
 import { TbSoccerField } from "react-icons/tb";
+import { ListPlus } from 'lucide-react';
 
 import CalendarItem from "./calendar/type-place-calendar";
 import { Card } from "@/components/ui/card";
@@ -45,7 +46,6 @@ export default function EventDialog({ children, place }: EventDialogProps) {
   useEffect(() => {
     async function fetchData() {
       const data = await GetPlacesByTypeId(place.id);
-
       setPlaces(data);
     }
     fetchData();
@@ -59,14 +59,16 @@ export default function EventDialog({ children, place }: EventDialogProps) {
             {place.name === "Churrasqueiras" && <Ham />}
             {place.name.includes("Quadra") && <LandPlot />}
             {place.name.includes("Campo") && <BiFootball size={"24"} />}
+            {place.name !== "Churrasqueiras" && !place.name.includes("Quadra") && !place.name.includes("Campo") && <ListPlus />}
             {place.name}
+
           </h3>
           <CollapsibleTrigger asChild>{children}</CollapsibleTrigger>
         </div>
         <CollapsibleContent className="space-y-2 mt-4">
-          {places ? (
+          {places.length !== 0 ? (
             places.map((place: Place, index: number) => (
-              <Sheet>
+              <Sheet key={index}>
                 <SheetTrigger className="flex w-full justify-between items-center ">
                   <Card
                     className="flex w-full justify-between items-center p-4"
@@ -91,7 +93,7 @@ export default function EventDialog({ children, place }: EventDialogProps) {
               </Sheet>
             ))
           ) : (
-            <div>Nenhum local cadastro...</div>
+            <div>Nenhum local cadastrado...</div>
           )}
         </CollapsibleContent>
       </Collapsible>

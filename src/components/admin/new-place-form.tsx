@@ -31,6 +31,7 @@ import RegisterPlace from "@/actions/place/register-place";
 import { GetTypeOfPlaces } from "@/actions/place/type-of-place";
 import { Checkbox } from "@/components/ui/checkbox";
 import { BackButton } from "../auth/back-button";
+
 type TypeOfPlaceModel = {
   id: string;
   name: string;

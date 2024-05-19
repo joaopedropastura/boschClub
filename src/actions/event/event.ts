@@ -47,3 +47,18 @@ export async function GetPlaces() {
     status: response.status,
   };
 }
+
+
+
+export async function GetEventsByPlaceId(id: string) {
+  const response = await fetch(`${domain}/api/event/events-by-place-id/${id}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await response.json();
+
+  return data;
+}

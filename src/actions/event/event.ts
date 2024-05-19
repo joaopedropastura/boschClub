@@ -25,6 +25,8 @@ export async function RegisterEvent(values: z.infer<typeof eventSchema>) {
 
   const data = await response.json();
 
+  console.log(data)
+
   return {
     data: data,
     status: response.status,

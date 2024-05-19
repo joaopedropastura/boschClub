@@ -1,4 +1,4 @@
-
+"use server";
 import * as z from "zod";
 import { eventSchema } from "@/schemas/event";
 import { Button } from "@/components/ui/button";
@@ -13,10 +13,18 @@ import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { CalendarIcon } from "@radix-ui/react-icons";
 import { ControllerRenderProps } from "react-hook-form";
+import { GetEventsByPlaceId } from "@/actions/event/event";
 
-export default function NewEventDataPicker(
-  field: ControllerRenderProps<z.infer<typeof eventSchema>, "date">
+export default async function NewEventDataPicker(
+  field: ControllerRenderProps<z.infer<typeof eventSchema>, "date">,
+  placeId: string
+
+
 ) {
+
+  const events = await GetEventsByPlaceId(placeId);
+
+
   return (
     <FormItem>
       <Popover>
@@ -43,7 +51,17 @@ export default function NewEventDataPicker(
             mode="single"
             selected={field.value}
             onSelect={field.onChange}
-            disabled={(date) => date < new Date()}
+            disabled={(date) =>
+              date < new Date() ||
+              date >
+                new Date(
+                  new Date().getFullYear() + 1,
+                  new Date().getMonth(),
+                  new Date().getDate()
+                )
+            }
+            events={events}
+            
             initialFocus
           />
         </PopoverContent>

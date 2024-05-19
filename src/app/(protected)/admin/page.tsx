@@ -45,7 +45,7 @@ export default function AdminPage() {
           <FormSuccess message="Você é um admin" />
         </RoleGate>
         
-        <div className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-md">
+        {/* <div className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-md">
           <span className="text-sm font-medium">adm api route</span>
           <Button onClick={onApiRouteClick}>Click to test</Button>
         </div>
@@ -53,7 +53,7 @@ export default function AdminPage() {
         <div className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-md">
           <span className="text-sm font-medium">adm api server action</span>
           <Button onClick={onServerActionClick}>Click to test</Button>
-        </div>
+        </div> */}
 
         <CreateEvent />
       </CardContent>

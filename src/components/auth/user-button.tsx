@@ -13,9 +13,15 @@ import useCurrentUser from "@/hooks/use-current-user";
 import LogOutButton from "@/components/auth/logout-button";
 import { LogOut, User, CalendarFold } from "lucide-react";
 import Link from "next/link";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
+import { useTheme } from "next-themes";
 
 export default function UserButton() {
   const user = useCurrentUser();
+  const { theme } = useTheme();
+  const { setTheme } = useTheme();
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
@@ -27,20 +33,32 @@ export default function UserButton() {
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="" align="end">
-      <DropdownMenuLabel>Minha Conta</DropdownMenuLabel>
-      <DropdownMenuSeparator />
+        <DropdownMenuLabel>Minha Conta</DropdownMenuLabel>
+        <DropdownMenuSeparator />
 
-      <DropdownMenuItem>
+        <DropdownMenuItem>
           <User className="mr-2 h-4 w-4" />
           <Link href="/profile">
             <span>Perfil</span>
           </Link>
         </DropdownMenuItem>
-      <DropdownMenuItem>
+        <DropdownMenuItem>
           <CalendarFold className="mr-2 h-4 w-4" />
           <Link href="/record-schedules">
             <span>Agendamentos</span>
           </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem>
+          <div className="flex items-center gap-4">
+            Modo escuro
+            <Switch
+              id="airplane-mode"
+              checked={theme === "dark"}
+              onCheckedChange={() =>
+                setTheme(theme === "dark" ? "light" : "dark")
+              }
+            />
+          </div>
         </DropdownMenuItem>
         <LogOutButton>
           <DropdownMenuItem>

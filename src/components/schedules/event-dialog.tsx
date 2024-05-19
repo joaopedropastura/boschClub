@@ -26,6 +26,7 @@ import { GetPlacesByTypeId } from "@/actions/place/place-by-type-id";
 import { LandPlot } from "lucide-react";
 import { BiFootball } from "react-icons/bi";
 import { Users } from "lucide-react";
+import NewEventForm from "./new-schedules/form-event";
 
 type EventDialogProps = {
   children: React.ReactNode;
@@ -85,8 +86,13 @@ export default function EventDialog({ children, place }: EventDialogProps) {
                   <SheetHeader>
                     <SheetTitle>Selecione a data - {place.name}</SheetTitle>
                     <SheetDescription>
-                      {place.id}
-                      <CalendarItem typeId={place.typeId} />
+                      <NewEventForm 
+                        placeId={place.id}
+                        maxCapacity={place.maxCapacity}
+                      
+                      />
+
+                      {/* <CalendarItem typeId={place.typeId} /> */}
                     </SheetDescription>
                   </SheetHeader>
                 </SheetContent>

@@ -34,6 +34,8 @@ export async function POST(req: Request): Promise<Response> {
     renterId: data.renterId
   };
 
+  console.log(newEvent)
+
   try {
     await db.event.create({
       data: newEvent,

@@ -64,3 +64,21 @@ export async function GetEventsByPlaceId(id: string) {
 
   return data;
 }
+
+
+export async function GetEventsByRenterId(id: string) {
+  const response = await fetch(`${domain}/api/event/events-by-renter-id/${id}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  const data = await response.json();
+
+  return data;
+}
+
+
+export async function VerifyEventsInDay(id: string) {
+  
+}

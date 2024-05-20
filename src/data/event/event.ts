@@ -15,6 +15,21 @@ export const getEventById = async (id: string) => {
   }
 };
 
+
+export const getEventByUserId = async (id : string) => {
+  try {
+    const events = await db.event.findMany({
+      where: {
+        renterId: id,
+      },
+    });
+    return events;
+  } catch (error) {
+    console.error("Error getting place by id", error);
+    return null;
+  }
+}
+
 export const getEventByRenterId = async (id: string) => {
   try {
     const events = await db.event.findMany({

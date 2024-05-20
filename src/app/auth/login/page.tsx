@@ -18,7 +18,7 @@ const font = Poppins({
 export default function Login() {
   // className="bg-red w-full h-full flex items-center p-4"
   return (
-    <main className={cn("bg-red w-full h-full flex items-center p-4", font.className)}>
+    <main className={cn("bg-red w-full h-full flex justify-center items-center p-4", font.className)}>
       <LoginForm/>
     </main>
   );

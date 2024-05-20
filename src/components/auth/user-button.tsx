@@ -17,6 +17,7 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { useTheme } from "next-themes";
 
+
 export default function UserButton() {
   const user = useCurrentUser();
   const { theme } = useTheme();
@@ -35,6 +36,18 @@ export default function UserButton() {
       <DropdownMenuContent className="" align="end">
         <DropdownMenuLabel>Minha Conta</DropdownMenuLabel>
         <DropdownMenuSeparator />
+        <DropdownMenuItem>
+          <div className="flex items-center gap-4">
+            Modo escuro
+            <Switch
+              id="airplane-mode"
+              checked={theme === "dark"}
+              onCheckedChange={() =>
+                setTheme(theme === "dark" ? "light" : "dark")
+              }
+            />
+          </div>
+        </DropdownMenuItem>
 
         <DropdownMenuItem>
           <User className="mr-2 h-4 w-4" />
@@ -47,18 +60,6 @@ export default function UserButton() {
           <Link href="/record-schedules">
             <span>Agendamentos</span>
           </Link>
-        </DropdownMenuItem>
-        <DropdownMenuItem>
-          <div className="flex items-center gap-4">
-            Modo escuro
-            <Switch
-              id="airplane-mode"
-              checked={theme === "dark"}
-              onCheckedChange={() =>
-                setTheme(theme === "dark" ? "light" : "dark")
-              }
-            />
-          </div>
         </DropdownMenuItem>
         <LogOutButton>
           <DropdownMenuItem>

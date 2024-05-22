@@ -8,3 +8,9 @@ export const eventSchema = z.object({
     placeId: z.string(),
     renterId: z.string(),
 })
+
+
+export const eventAvailableSchema = z.object({
+    date: z.date(),
+    placeId: z.string(),
+})

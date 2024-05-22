@@ -39,6 +39,7 @@ prisma commands:
 -   reset structure of db = npx prisma generate
 -   clear data in db = npx prisma migrate reset
 -   up new atributes to db = npx prisma db push
+-   recreate the relationship between table models = npx prisma migrate dev
 
 
 

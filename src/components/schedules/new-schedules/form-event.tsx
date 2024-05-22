@@ -18,22 +18,62 @@ import { FormSuccess } from "@/components/common/form-success";
 import { GetEventsByPlaceId, RegisterEvent } from "@/actions/event/event";
 import { useTransition, useState, use, useEffect } from "react";
 import { CardContent } from "@/components/ui/card";
-import NewEventDataPicker from "@/components/schedules/new-schedules/datapicker";
-import SelectPlaces from "@/components/schedules/new-schedules/select-places";
 import useCurrentUser from "@/hooks/use-current-user";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
 import { CalendarIcon } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
+import { GetPlaceByTypeId } from "@/actions/place/places";
 
-export default function NewEventForm({ placeId, maxCapacity }: { placeId: string, maxCapacity: number}) {
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { VerifyAvailableSchedules } from "@/actions/event/verify-available-schedules";
+import { eventAvailableSchema } from "@/schemas/event";
+
+export default function NewEventForm({
+  placeId,
+  maxCapacity,
+  typeId,
+}: {
+  typeId: string;
+  placeId: string;
+  maxCapacity: number;
+}) {
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const userId = useCurrentUser();
   const [events, setEvents] = useState([]);
-  // const [identity, setIdentity] = useState<string>("");
+  const [typeOfPlace, setTypeOfPlace] = useState<string>("");
+  const [dateSelected, setDateSelected] = useState(false);
+  const [dateInitial, setDateInitial] = useState<Array<string>>([]);
+  const [dateFinal, setDateFinal] = useState<Array<string>>([]);
+  const [hoursAvailable, setHoursAvailable] = useState<Array<string>>([]);
+  const [isWeekday, setIsWeekday] = useState<boolean>();
+  const [avalilableSchedules, setAvailableSchedules] = useState<Event[]>([]);
+  const [Day, setDay] = useState<Date>(new Date());
+
+  type Event = {
+    id: string;
+    name: string;
+    placeId: string;
+    renterId: string;
+    startTime: string;
+    endTime: string;
+    date: Date;
+  };
 
   const form = useForm<z.infer<typeof eventSchema>>({
     resolver: zodResolver(eventSchema),
@@ -44,6 +84,50 @@ export default function NewEventForm({ placeId, maxCapacity }: { placeId: string
       renterId: "",
     },
   });
+
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     const temp = {
+  //       date: Day,
+  //       placeId,
+  //     };
+  //     const data = await VerifyAvailableSchedules(temp);
+  //     if (data !== undefined && data !== null) {
+  //       setAvailableSchedules(data);
+  //       console.log(data);
+  //     }
+  //   }
+  //   fetchData();
+  //   console.log(avalilableSchedules);
+  // }, [Day]);
+
+  useEffect(() => {
+    const temp = {
+      date: Day,
+      placeId,
+    };
+    async function fetchData() {
+      const data = await VerifyAvailableSchedules(temp);
+      setAvailableSchedules(data!);
+      console.log(data);
+    }
+    fetchData();
+  }, [Day]);
+
+
+  useEffect(() => {
+    const subscription = form.watch((value) => {
+      if (value.date) {
+        const date = new Date(value.date);
+        const day = date.getDay();
+        let temp = day >= 1 && day <= 5;
+        setIsWeekday(temp);
+        setDay(date);
+      }
+      setDateSelected(!!value.date);
+    });
+    return () => subscription.unsubscribe();
+  }, [form, isWeekday]);
 
   const onSubmit = async (values: z.infer<typeof eventSchema>) => {
     setError("");
@@ -65,15 +149,18 @@ export default function NewEventForm({ placeId, maxCapacity }: { placeId: string
   useEffect(() => {
     const fetchData = async () => {
       const data = await GetEventsByPlaceId(placeId);
+      const placeType = await GetPlaceByTypeId(typeId);
       setEvents(
         data.events.map((e: { date: Date; type: String }) => ({
           date: e.date,
           type: e.type,
         }))
       );
-      console.log(data);
+      console.log(placeType.name);
+      setTypeOfPlace(placeType.name);
     };
     fetchData();
+    console.log(typeOfPlace);
   }, []);
 
   return (
@@ -86,12 +173,9 @@ export default function NewEventForm({ placeId, maxCapacity }: { placeId: string
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  {/* <FormLabel>
-                    nome do evento
-                  
-                  </FormLabel> */}
-                  <FormLabel>máximo de convidados: {maxCapacity}</FormLabel>
-                  
+                  {maxCapacity > 0 && (
+                    <FormLabel>Máximo de convidados: {maxCapacity}</FormLabel>
+                  )}
                   <FormControl>
                     <Input
                       placeholder="nome do evento"
@@ -150,15 +234,21 @@ export default function NewEventForm({ placeId, maxCapacity }: { placeId: string
                 </FormItem>
               )}
             />
-            {/* <FormField
-              control={form.control}
-              name="placeId"
-              render={({ field }) => (
-                <FormItem>
-                  <SelectPlaces {...field} />
-                </FormItem>
-              )}
-            /> */}
+
+            {(typeOfPlace?.includes("Campo") ||
+              typeOfPlace?.includes("Quadra")) && (
+              <Select disabled={!dateSelected}>
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="selecione um horário" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectLabel>Selecione uma data disponível</SelectLabel>
+                    <SelectItem value="apple">Apple</SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            )}
           </div>
           <FormError message={error} />
           <FormSuccess message={success} />

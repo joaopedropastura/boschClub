@@ -57,10 +57,10 @@ export default function EventDialog({ children, place }: EventDialogProps) {
       <Collapsible open={isOpen} onOpenChange={setIsOpen} className="w-full">
         <div className="flex items-center justify-between">
           <h3 className="flex gap-4 text-sm font-semibold">
-            {place.name === "Churrasqueiras" && <Ham />}
+            {place.name.includes("Churras") && <Ham />}
             {place.name.includes("Quadra") && <LandPlot />}
             {place.name.includes("Campo") && <BiFootball size={"24"} />}
-            {place.name !== "Churrasqueiras" && !place.name.includes("Quadra") && !place.name.includes("Campo") && <ListPlus />}
+            {!place.name.includes("Churras") && !place.name.includes("Quadra") && !place.name.includes("Campo") && <ListPlus />}
             {place.name}
 
           </h3>
@@ -88,10 +88,10 @@ export default function EventDialog({ children, place }: EventDialogProps) {
                     <SheetDescription>
                       <NewEventForm 
                         placeId={place.id}
+                        typeId={place.typeId}
                         maxCapacity={place.maxCapacity}
                       
                       />
-
                       {/* <CalendarItem typeId={place.typeId} /> */}
                     </SheetDescription>
                   </SheetHeader>

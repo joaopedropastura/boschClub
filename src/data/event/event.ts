@@ -61,6 +61,23 @@ export const getEventByPlaceId = async (id: string) => {
 }
 
 
+export const getEventByPlaceIdAndDate = async (id: string, date: Date) => {
+  try {
+    const events = await db.event.findMany({
+      where: {
+        placeId: id,
+        date: date,
+      },
+    });
+
+    return events;
+  } catch (error) {
+    console.error("Error getting place by id in this date", error);
+    return null;
+  }
+}
+
+
 export const getEventByDate = async (date: Date) => {
   try {
     const events = await db.event.findMany({

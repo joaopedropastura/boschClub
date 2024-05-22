@@ -79,6 +79,3 @@ export async function GetEventsByRenterId(id: string) {
 }
 
 
-export async function VerifyEventsInDay(id: string) {
-  
-}

@@ -12,4 +12,19 @@ export async function GetPlaces() {
   
     const data = await response.json();
     return data.places;
-  }
+}
+
+
+
+export async function GetPlaceByTypeId(id: string) {
+  const response = await fetch(`${domain}/api/place/type-of-place/${id}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await response.json();
+  
+  return data.typeOfPlaces;
+}

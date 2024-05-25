@@ -10,12 +10,13 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import NewEventForm from "../new-schedules/form-event";
+// import NewEventForm from "../new-schedules/form-event";
 import NewEvent from "@/components/schedules/new-schedules/modal-schedules";
 import EventTypeOfList from "@/components/schedules/event-type-of-list";
+import ModalSchedules from "@/components/schedules/record/modal-schedules";
+import CalendarItem from "@/components/schedules/calendar/type-place-calendar";
 
 export default function TabSchedules() {
-
   return (
     <Tabs defaultValue="account" className="w-full">
       <TabsList className="grid w-full grid-cols-2">
@@ -24,31 +25,14 @@ export default function TabSchedules() {
       </TabsList>
       <TabsContent value="makeSchedule">
         <NewEvent>
-            <EventTypeOfList />
+          <EventTypeOfList />
         </NewEvent>
       </TabsContent>
       <TabsContent value="recordSchedules">
-        <Card>
-          <CardHeader>
-            <CardTitle>Password</CardTitle>
-            <CardDescription>
-              Change your password here. After saving, you'll be logged out.
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-2">
-            <div className="space-y-1">
-              <Label htmlFor="current">Current password</Label>
-              <Input id="current" type="password" />
-            </div>
-            <div className="space-y-1">
-              <Label htmlFor="new">New password</Label>
-              <Input id="new" type="password" />
-            </div>
-          </CardContent>
-          <CardFooter>
-            <Button>Save password</Button>
-          </CardFooter>
-        </Card>
+        <ModalSchedules>
+          {/* <CalendarItem /> */}
+          <div></div>
+        </ModalSchedules>
       </TabsContent>
     </Tabs>
   );

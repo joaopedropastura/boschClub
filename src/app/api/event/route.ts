@@ -24,6 +24,8 @@ export async function GET(): Promise<Response> {
 }
 
 
+
+
 export async function POST(req: Request): Promise<Response> {
   const data = await req.json();
 
@@ -31,10 +33,11 @@ export async function POST(req: Request): Promise<Response> {
     name: data.name,
     date: data.date,
     placeId: data.placeId,   
-    renterId: data.renterId
+    renterId: data.renterId,
+    startTime: data.startTime,
+    endTime: data.endTime
   };
 
-  console.log(newEvent)
 
   try {
     await db.event.create({

@@ -59,7 +59,6 @@ export default function CalendarItem({ typeId }: { typeId: string }) {
     const fetchData = async () => {
       const data = await GetEventsByPlaceId(typeId);
       setEvents(data.events.map((e: { date: Date, type: String }) => ({ date: e.date, type: e.type})));
-      console.log(data)
     };
     fetchData();
   }, []);

@@ -4,11 +4,27 @@ import { db } from "@/lib/db";
 import { getEventByRenterId } from "@/data/event/event";
 import { getPlaceById } from "@/data/place/place";
 import { getUserById } from "@/data/user/user";
+import { getTypePlaceById } from "@/data/place/type-of-place";
 
 interface Context {
   params: {
     id: string;
   };
+}
+
+export async function DELETE( req : Request, context: Context): Promise<Response> {
+  const { params } = context;
+  try {
+    await db.event.delete({
+      where: {
+        id: params.id,
+      },
+    });
+
+    return NextResponse.json({ message: "Event deleted" }, { status: 200 });
+  } catch (error) {
+    return NextResponse.json({ message: "Error: " + error }, { status: 500 });
+  }
 }
 
 export async function GET( req : Request, context: Context): Promise<Response> {
@@ -25,6 +41,7 @@ export async function GET( req : Request, context: Context): Promise<Response> {
         return { 
           ...event, 
           place: {
+            id: place?.id,
             name: place?.name,
             maxCapacity: place?.maxCapacity,
             type: place?.typeId
@@ -34,12 +51,11 @@ export async function GET( req : Request, context: Context): Promise<Response> {
 
     const eventsWithPlaceType = await Promise.all(
       eventsWithPlace.map(async (event) => {
-        const placeType = await getPlaceById(event.place.type!)
+        const placeType = await getTypePlaceById(event.place.type!)
         return { 
           ...event, 
-          place: {
-            ...event.place,
-            typeName: placeType?.name
+          typePlace: {
+            name: placeType?.name
           }, 
         }
       }))
@@ -56,6 +72,8 @@ export async function GET( req : Request, context: Context): Promise<Response> {
         }
       }));
 
+
+      
 
 
     return NextResponse.json({ eventsWithRenter }, { status: 200 });

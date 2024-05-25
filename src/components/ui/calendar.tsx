@@ -1,35 +1,41 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { ChevronLeft, ChevronRight } from "lucide-react"
-import { DayPicker } from "react-day-picker"
+import * as React from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { DayPicker } from "react-day-picker";
 
-import { cn } from "@/lib/utils"
-import { buttonVariants } from "@/components/ui/button"
+import { cn } from "@/lib/utils";
+import { buttonVariants } from "@/components/ui/button";
 
 export type CalendarProps = React.ComponentProps<typeof DayPicker> & {
-  events?: Array<{ date: string }>
-}
+  events?: Array<{ date: string }>;
+  disabledDays?: Array<{ date: string }>;
+};
 
 function Calendar({
   className,
   classNames,
   events = [],
+  disabledDays = [],
   showOutsideDays = true,
   ...props
 }: CalendarProps) {
-
   const modifiers = {
-    eventDay: events.map(event => new Date(event.date))
+    eventDay: events.map((event) => new Date(event.date)),
+    disabled: disabledDays.map((day) => new Date(day.date)),
   };
 
   const modifiersStyles = {
     eventDay: {
-      color: 'white',
-      backgroundColor: 'green'
-    }
+      color: "white",
+      backgroundColor: "red",
+    },
+    disabled: {
+      color: "gray",
+      backgroundColor: "lightred",
+      pointerEvents: 'none' as 'none'
+    },
   };
-
 
   return (
     <DayPicker
@@ -67,8 +73,7 @@ function Calendar({
         day_range_middle:
           "aria-selected:bg-accent aria-selected:text-accent-foreground",
         day_hidden: "invisible",
-        
-        
+
         ...classNames,
       }}
       components={{
@@ -77,11 +82,10 @@ function Calendar({
       }}
       modifiers={modifiers}
       modifiersStyles={modifiersStyles}
-
       {...props}
     />
-  )
+  );
 }
-Calendar.displayName = "Calendar"
+Calendar.displayName = "Calendar";
 
-export { Calendar }
+export { Calendar };

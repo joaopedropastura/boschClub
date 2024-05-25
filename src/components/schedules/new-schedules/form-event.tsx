@@ -16,7 +16,7 @@ import { eventSchema } from "@/schemas/event";
 import { FormError } from "@/components/common/form-error";
 import { FormSuccess } from "@/components/common/form-success";
 import { GetEventsByPlaceId, RegisterEvent } from "@/actions/event/event";
-import { useTransition, useState, use, useEffect } from "react";
+import { useTransition, useState, useEffect } from "react";
 import { CardContent } from "@/components/ui/card";
 import useCurrentUser from "@/hooks/use-current-user";
 import {
@@ -40,7 +40,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { VerifyAvailableSchedules } from "@/actions/event/verify-available-schedules";
-import { eventAvailableSchema } from "@/schemas/event";
 
 export default function NewEventForm({
   placeId,
@@ -58,12 +57,29 @@ export default function NewEventForm({
   const [events, setEvents] = useState([]);
   const [typeOfPlace, setTypeOfPlace] = useState<string>("");
   const [dateSelected, setDateSelected] = useState(false);
-  const [dateInitial, setDateInitial] = useState<Array<string>>([]);
-  const [dateFinal, setDateFinal] = useState<Array<string>>([]);
-  const [hoursAvailable, setHoursAvailable] = useState<Array<string>>([]);
+  const [Day, setDay] = useState<Date>(new Date());
+  const [selectedStartHour, setSelectedStartHour] = useState<string>("");
+  const [nextHourAvailable, setNextHourAvailable] = useState<boolean>(true);
+  const [hoursUnavailable, setHoursUnavailable] = useState<Array<string>>([]);
   const [isWeekday, setIsWeekday] = useState<boolean>();
   const [avalilableSchedules, setAvailableSchedules] = useState<Event[]>([]);
-  const [Day, setDay] = useState<Date>(new Date());
+  const [hoursAvailable, setHoursAvailable] = useState<Array<string>>([]);
+
+  const hours = [
+    "09:00",
+    "10:00",
+    "11:00",
+    "12:00",
+    "13:00",
+    "14:00",
+    "15:00",
+    "16:00",
+    "17:00",
+    "18:00",
+    "19:00",
+    "20:00",
+    "21:00",
+  ];
 
   type Event = {
     id: string;
@@ -82,24 +98,10 @@ export default function NewEventForm({
       date: new Date(),
       placeId: "",
       renterId: "",
+      startTime: "",
+      endTime: "",
     },
   });
-
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     const temp = {
-  //       date: Day,
-  //       placeId,
-  //     };
-  //     const data = await VerifyAvailableSchedules(temp);
-  //     if (data !== undefined && data !== null) {
-  //       setAvailableSchedules(data);
-  //       console.log(data);
-  //     }
-  //   }
-  //   fetchData();
-  //   console.log(avalilableSchedules);
-  // }, [Day]);
 
   useEffect(() => {
     const temp = {
@@ -109,11 +111,10 @@ export default function NewEventForm({
     async function fetchData() {
       const data = await VerifyAvailableSchedules(temp);
       setAvailableSchedules(data!);
-      console.log(data);
+      setHoursUnavailable(data.schedules);
     }
     fetchData();
   }, [Day]);
-
 
   useEffect(() => {
     const subscription = form.watch((value) => {
@@ -129,6 +130,14 @@ export default function NewEventForm({
     return () => subscription.unsubscribe();
   }, [form, isWeekday]);
 
+  useEffect(() => {
+    if (selectedStartHour) {
+      const startHourIndex = hours.indexOf(selectedStartHour);
+      const nextHour = hours[startHourIndex + 1];
+      setNextHourAvailable(!hoursUnavailable.includes(nextHour));
+    }
+  }, [selectedStartHour, hoursUnavailable]);
+
   const onSubmit = async (values: z.infer<typeof eventSchema>) => {
     setError("");
     setSuccess("");
@@ -136,6 +145,9 @@ export default function NewEventForm({
     startTransition(() => {
       values.renterId = userId?.id.toString()!;
       values.placeId = placeId;
+
+      if (values.endTime === "") values.endTime = selectedStartHour;
+
       RegisterEvent(values).then((data) => {
         if (data.status === 500) {
           setError("verifique os dados");
@@ -156,12 +168,33 @@ export default function NewEventForm({
           type: e.type,
         }))
       );
-      console.log(placeType.name);
       setTypeOfPlace(placeType.name);
     };
     fetchData();
-    console.log(typeOfPlace);
   }, []);
+
+  const getFilteredEndHours = () => {
+    if (!selectedStartHour || !nextHourAvailable) return [];
+
+    const startHourIndex = hours.indexOf(selectedStartHour);
+    const filteredEndHours = [];
+
+    const dayOfWeek = Day.getDay();
+    const limitHour = dayOfWeek === 0 ? "15:30" : "21:00"; 
+
+    for (let i = startHourIndex + 1; i < hours.length; i++) {
+      const currentHour = hours[i];
+      if (hoursUnavailable.includes(currentHour) || currentHour > limitHour) {
+        break; 
+      }
+      filteredEndHours.push(currentHour);
+      if (filteredEndHours.length >= 2) {
+        break; 
+      }
+    }
+
+    return filteredEndHours;
+  };
 
   return (
     <CardContent>
@@ -226,6 +259,7 @@ export default function NewEventForm({
                               new Date().getDate()
                             )
                         }
+                        disabledDays={typeOfPlace.includes("Churrasqueira") ? events : []}
                         events={events}
                         initialFocus
                       />
@@ -235,20 +269,81 @@ export default function NewEventForm({
               )}
             />
 
-            {(typeOfPlace?.includes("Campo") ||
-              typeOfPlace?.includes("Quadra")) && (
-              <Select disabled={!dateSelected}>
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="selecione um horário" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectLabel>Selecione uma data disponível</SelectLabel>
-                    <SelectItem value="apple">Apple</SelectItem>
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-            )}
+            <div className="flex gap-4">
+              {(typeOfPlace?.includes("Campo") ||
+                typeOfPlace?.includes("Quadra")) && (
+                <FormField
+                  control={form.control}
+                  name="startTime"
+                  render={({ field }) => (
+                    <Select
+                      disabled={!dateSelected}
+                      onValueChange={(value) => {
+                        field.onChange(value);
+                        setSelectedStartHour(value);
+                      }}
+                      defaultValue={field.value}
+                    >
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="horário início" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectGroup>
+                          <SelectLabel>
+                            Selecione um horário disponível
+                          </SelectLabel>
+                          {hours.map((hour) => {
+                            const isAvailable = hoursUnavailable.includes(hour);
+                            const dayOfWeek = Day.getDay();
+                            const limitHour =
+                              dayOfWeek === 0 ? "15:30" : "21:00"; // Define o limite de horário para domingo
+                            return (
+                              <SelectItem
+                                key={hour}
+                                value={hour}
+                                disabled={isAvailable || hour > limitHour}
+                              >
+                                {hour}
+                              </SelectItem>
+                            );
+                          })}
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                  )}
+                />
+              )}
+              {(typeOfPlace?.includes("Campo") ||
+                typeOfPlace?.includes("Quadra")) && (
+                <FormField
+                  control={form.control}
+                  name="endTime"
+                  render={({ field }) => (
+                    <Select
+                      disabled={!selectedStartHour || !nextHourAvailable}
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="horário final" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectGroup>
+                          <SelectLabel>
+                            Selecione um horário disponível
+                          </SelectLabel>
+                          {getFilteredEndHours().map((hour) => (
+                            <SelectItem key={hour} value={hour}>
+                              {hour}
+                            </SelectItem>
+                          ))}
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                  )}
+                />
+              )}
+            </div>
           </div>
           <FormError message={error} />
           <FormSuccess message={success} />

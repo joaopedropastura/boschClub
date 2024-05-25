@@ -92,3 +92,18 @@ export const getEventByDate = async (date: Date) => {
     return null;
   }
 }
+
+
+export const deleteEventById = async (id: string) => {
+  try {
+    await db.event.delete({
+      where: {
+        id: id,
+      },
+    });
+
+    return { message: "Event deleted" };
+  } catch (error) {
+    return { message: "Error deleting event" + error };
+  }
+}

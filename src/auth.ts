@@ -35,7 +35,6 @@ export const {
   },
   callbacks: {
     async signIn({ user, account }) {
-      console.log(user, account);
       if (account?.provider !== "credentials") return true;
 
       const existingUser = await getUserById(user.id!);

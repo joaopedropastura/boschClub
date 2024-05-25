@@ -32,7 +32,10 @@ como importar modelos 3d formato stl
 
     https://www.youtube.com/watch?v=PEMfsqZ2-As&ab_channel=GTCoding
 
-
+provedor de emails
+https://resend.com/logs/13d7c746-253e-40b4-a53d-19553c13f78d
+db online
+https://console.neon.tech/app/projects/red-sky-91251273/branches/br-orange-night-a5r6nzjz/old_tables
 
 prisma commands:
 

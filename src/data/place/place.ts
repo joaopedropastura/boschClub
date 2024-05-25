@@ -15,6 +15,8 @@ export const getPlaceById = async (id: string) => {
   }
 };
 
+
+
 export const getPlacesByTypeId = async (typeId: string) => {
   try {
     const places = await db.place.findMany({

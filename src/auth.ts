@@ -82,7 +82,7 @@ export const {
       if (!existingUser) return token;
 
       const existingAccount = await getAccountById(existingUser.id!);
-
+      
       token.isOAuth = !!existingAccount;
       token.role = existingUser.role;
       token.email = existingUser.email;

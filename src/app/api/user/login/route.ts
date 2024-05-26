@@ -1,6 +1,4 @@
 import { NextResponse, NextRequest } from "next/server";
-import connectMongoDB from "@/config/mongodb";
-import User from "@/db-models/user/user";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { signIn } from "@/auth";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";

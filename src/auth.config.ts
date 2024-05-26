@@ -34,9 +34,12 @@ export default {
             password, 
             user.password
         );
+
         if (passwordsMatch) 
             return user;
+        
 
+        console.log(user)
         return null;
       },
     }),

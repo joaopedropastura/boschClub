@@ -115,7 +115,7 @@ export function RegisterPlaceForm() {
                     defaultValue={field.value}
                   >
                     <SelectTrigger className="">
-                      <SelectValue placeholder="selecione um local" />
+                      <SelectValue placeholder="selecione uma modalidade" />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectGroup>

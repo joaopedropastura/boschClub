@@ -197,7 +197,7 @@ export default function NewEventForm({
   };
 
   return (
-    <CardContent>
+    <CardContent className="w-full">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className={"space-y-6"}>
           <div className="space-y-4">
@@ -296,7 +296,7 @@ export default function NewEventForm({
                             const isAvailable = hoursUnavailable.includes(hour);
                             const dayOfWeek = Day.getDay();
                             const limitHour =
-                              dayOfWeek === 0 ? "15:30" : "21:00"; // Define o limite de horário para domingo
+                              dayOfWeek === 0 ? "15:30" : "21:00"; 
                             return (
                               <SelectItem
                                 key={hour}

@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/sheet";
 import CalendarItem from "@/components/common/calendar/calendar";
 import EventDialog from "@/components/schedules/event-dialog";
+import ToggleButton from "@/components/schedules/toggle-button";
 
 type PlaceModel = {
   id: string;
@@ -31,6 +32,7 @@ export default async function EventTypeOfList() {
         <Card className="flex justify-between items-center p-4" key={index}>
 
           <EventDialog place={place}>
+            {/* <ToggleButton place={place} /> */}
             <Button variant="ghost" value={place.id}>
               <ChevronDown />
             </Button>

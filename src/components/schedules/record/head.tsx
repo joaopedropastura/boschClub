@@ -7,7 +7,7 @@ export default async function ModalHead() {
     const session = await verifySession();
   
     return (
-    <div className="flex flex-col align gap-4">
+    <div className="flex flex-col items-center justify-center gap-4">
         <AvatarIcon style={"w-20 h-20 self-center"}/>
         <p>Agendamentos de {session?.user?.name}</p>    
     </div>

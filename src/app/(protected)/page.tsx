@@ -1,3 +1,5 @@
+"use server";
+
 import Width from "@/components/common/width/width";
 import ThemeSwitcher from "@/components/common/theme-switcher/theme-switcher";
 import ModalSchedules from "@/components/schedules/record/modal-schedules";
@@ -6,8 +8,13 @@ import NewEventForm from "@/components/schedules/new-schedules/form-event";
 import NewEvent from "@/components/schedules/new-schedules/modal-schedules";
 import verifySession from "@/actions/verify-session";
 import TabSchedules from "@/components/schedules/tab/tab-schedules";
+import { redirect } from "next/navigation";
 export default async function HomePage() {
   const session = await verifySession();
+
+
+  if(session?.user.role === 'ADMIN') 
+    redirect('/admin')
 
 
   return (

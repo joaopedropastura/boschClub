@@ -15,7 +15,7 @@ import { Button } from "@/components/ui/button";
 import { eventSchema } from "@/schemas/event";
 import { FormError } from "@/components/common/form-error";
 import { FormSuccess } from "@/components/common/form-success";
-import { GetEventsByPlaceId, RegisterEvent } from "@/actions/event/event";
+import { GetEventsByPlaceId, RegisterEvent } from "@/actions/event/events";
 import { useTransition, useState, useEffect } from "react";
 import { CardContent } from "@/components/ui/card";
 import useCurrentUser from "@/hooks/use-current-user";

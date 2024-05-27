@@ -12,7 +12,7 @@ export default {
   providers: [
     Facebook({
       clientId: process.env.FACEBOOK_CLIENT_ID,
-      clientSecret: process.env.FACEBOOK_CLIENT_SECRET
+      clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
     }),
     Google({
       clientId: process.env.GOOGLE_CLIENT_ID,
@@ -21,25 +21,17 @@ export default {
     Credentials({
       async authorize(credentials) {
         const validatedFields = loginSchema.safeParse(credentials);
-        if (!validatedFields.success)
-            return null;
+        if (!validatedFields.success) return null;
 
         const { email, password } = validatedFields.data;
         const user = await getUserByEmail(email);
 
-        if (!user || !user.password)
-            return null;
+        if (!user || !user.password) return null;
 
-        const passwordsMatch = await bcrypt.compare(
-            password, 
-            user.password
-        );
+        const passwordsMatch = await bcrypt.compare(password, user.password);
 
-        if (passwordsMatch) 
-            return user;
-        
+        if (passwordsMatch) return user;
 
-        console.log(user)
         return null;
       },
     }),

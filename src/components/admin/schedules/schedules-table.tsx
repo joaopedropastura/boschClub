@@ -39,6 +39,9 @@ import {
 } from "@/components/ui/table";
 import { useEffect, useState } from "react";
 import { GetEventsToAdminTable } from "@/actions/event/events";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { CancelEvent } from "../cancel-event-form";
+import { DetailsEvent } from "../details-event-form";
 
 type EventModel = {
   id: string;
@@ -59,6 +62,17 @@ type EventModel = {
     email: string;
   };
 };
+
+function formatTime(timeString: string) {
+  const date = new Date(timeString);
+  const hours = date.getUTCHours();
+  const minutes = date.getUTCMinutes();
+
+  const formattedHours = hours < 10 ? `0${hours}` : hours;
+  const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+
+  return `${formattedHours}:${formattedMinutes}`;
+}
 
 function formatDate(dateString: string) {
   const date = new Date(dateString);
@@ -89,11 +103,6 @@ export const columns: ColumnDef<EventModel>[] = [
     cell: ({ row }) => <div>{row.original.place.name}</div>,
   },
   {
-    accessorKey: "locatário",
-    header: "Locatário",
-    cell: ({ row }) => <div>{row.original.renter.name}</div>,
-  },
-  {
     id: "horários",
     header: "Horários",
     cell: ({ row }) => {
@@ -101,7 +110,7 @@ export const columns: ColumnDef<EventModel>[] = [
       const endTime = row.original.endTime;
       return (
         <div>
-          {startTime && endTime ? `${startTime} ~ ${endTime}` : "Dia todo"}
+          {startTime && endTime ? `${formatTime(startTime)} ~ ${formatTime(endTime)}` : "Dia inteiro"}
         </div>
       );
     },
@@ -123,16 +132,35 @@ export const columns: ColumnDef<EventModel>[] = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Ações</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(event.id)}
-            >
-              <CircleX className="mr-2 h-4 w-4"/>
-              Cancelar evento
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <TextSearch className="mr-2 h-4 w-4"/>
-              Ver detalhes
-            </DropdownMenuItem>
+            <div className="flex flex-col">
+              <DropdownMenuItem asChild>
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button variant="ghost">
+                      <CircleX className="mr-2 h-4 w-4" />
+                      Cancelar evento
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="sm:max-w-[425px]">
+                    <CancelEvent event={event} />
+                  </DialogContent>
+                </Dialog>
+              </DropdownMenuItem>
+
+              <DropdownMenuItem asChild>
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button variant="ghost" className="flex justify-start">
+                      <TextSearch className="mr-2 h-4 w-4" />
+                      Ver detalhes
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="sm:max-w-[425px]">
+                    <DetailsEvent event={event} />
+                  </DialogContent>
+                </Dialog>
+              </DropdownMenuItem>
+            </div>
           </DropdownMenuContent>
         </DropdownMenu>
       );
@@ -178,19 +206,20 @@ export default function DataTableSchedules() {
       rowSelection,
     },
   });
-  console.log(table.getAllColumns());
 
   return (
     <div className="w-full">
       <div className="flex items-center py-4">
-        <Input
-          placeholder="Busque por locatário..."
-          value={(table.getColumn("data")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("data")?.setFilterValue(event.target.value)
+        {/* <Input
+          placeholder="Busque pela data..."
+          value={
+            (table.getColumn("data")?.getFilterValue() as string) ?? ""
           }
+          onChange={(event) => {
+            table.getColumn("data")?.setFilterValue(event.target.value);
+          }}
           className="max-w-sm"
-        />
+        /> */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">
@@ -218,8 +247,8 @@ export default function DataTableSchedules() {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <div className="rounded-md border">
-        <Table>
+      <div className="rounded-md border h-1/2">
+        <Table className="h-1/2">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
@@ -238,7 +267,7 @@ export default function DataTableSchedules() {
               </TableRow>
             ))}
           </TableHeader>
-          <TableBody>
+          <TableBody className="h-1/2">
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
@@ -269,10 +298,6 @@ export default function DataTableSchedules() {
         </Table>
       </div>
       <div className="flex items-center justify-end space-x-2 py-4">
-        <div className="flex-1 text-sm text-muted-foreground">
-          {table.getFilteredSelectedRowModel().rows.length} of{" "}
-          {table.getFilteredRowModel().rows.length} row(s) selected.
-        </div>
         <div className="space-x-2">
           <Button
             variant="outline"

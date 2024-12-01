@@ -1,14 +1,14 @@
-"use client"
- 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { CalendarIcon } from "@radix-ui/react-icons"
-import { format } from "date-fns"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
- 
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { Calendar } from "@/components/ui/calendar"
+"use client";
+
+import { zodResolver } from "@hookform/resolvers/zod";
+import { CalendarIcon } from "@radix-ui/react-icons";
+import { format } from "date-fns";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
 import {
   Form,
   FormControl,
@@ -17,25 +17,25 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
+} from "@/components/ui/form";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"
-import { toast } from "@/components/ui/use-toast"
- 
+} from "@/components/ui/popover";
+import { toast } from "@/components/ui/use-toast";
+
 const FormSchema = z.object({
   dob: z.date({
     required_error: "A date of birth is required.",
   }),
-})
- 
+});
+
 export default function NewEvent() {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
-  })
- 
+  });
+
   function onSubmit(data: z.infer<typeof FormSchema>) {
     toast({
       title: "You submitted the following values:",
@@ -44,9 +44,9 @@ export default function NewEvent() {
           <code className="text-white">{JSON.stringify(data, null, 2)}</code>
         </pre>
       ),
-    })
+    });
   }
- 
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -81,14 +81,19 @@ export default function NewEvent() {
                     selected={field.value}
                     onSelect={field.onChange}
                     disabled={(date) =>
-                      date > new Date() || date < new Date("1900-01-01")
+                      date < new Date() ||
+                      date >
+                        new Date(
+                          new Date().getFullYear(),
+                          new Date().getMonth() + 2,
+                          new Date().getDate()
+                        )
                     }
                     initialFocus
                   />
                 </PopoverContent>
               </Popover>
-              <FormDescription>
-                         </FormDescription>
+              <FormDescription></FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -96,5 +101,5 @@ export default function NewEvent() {
         <Button type="submit">Submit</Button>
       </form>
     </Form>
-  )
+  );
 }

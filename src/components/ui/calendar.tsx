@@ -20,9 +20,20 @@ function Calendar({
   showOutsideDays = true,
   ...props
 }: CalendarProps) {
+  // Calculate the date two months from today
+  const today = new Date();
+  const twoMonthsLater = new Date(today.getFullYear(), today.getMonth() + 2, today.getDate());
+
+  // Combine disabledDays with dates before today and after two months from today
+  const allDisabledDays = [
+    ...disabledDays.map((day) => new Date(day.date)),
+    ...Array.from({ length: 60 }, (_, i) => new Date(today.getFullYear(), today.getMonth(), today.getDate() - i - 1)), // Dates before today
+    ...Array.from({ length: 365 }, (_, i) => new Date(today.getFullYear(), today.getMonth(), today.getDate() + i + 1)).filter(date => date > twoMonthsLater) // Dates after two months from today
+  ];
+
   const modifiers = {
     eventDay: events.map((event) => new Date(event.date)),
-    disabled: disabledDays.map((day) => new Date(day.date)),
+    disabled: allDisabledDays,
   };
 
   const modifiersStyles = {

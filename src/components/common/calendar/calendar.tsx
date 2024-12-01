@@ -25,7 +25,13 @@ export default function CalendarItem() {
       events={events}
       className="rounded-md border"
       disabled={(date) =>
-        date < new Date() || date > new Date(new Date().getFullYear() + 1, new Date().getMonth(), new Date().getDate())
+        date < new Date() ||
+        date >
+          new Date(
+            new Date().getFullYear(),
+            new Date().getMonth() + 2,
+            new Date().getDate()
+          )
       }
 
     />

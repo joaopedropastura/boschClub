@@ -6,7 +6,7 @@ import { STLLoader } from 'three-stdlib';
 import { useLoader } from '@react-three/fiber';
 
 const Model = (props : any) => {
-    const {scene} = useGLTF("./TestesDaArvore.glb")
+    const {scene} = useGLTF("./ModeloFinal.glb")
 
 
     return <primitive object={scene} scale={0.01} {...props} />

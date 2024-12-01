@@ -94,7 +94,7 @@ export default function SettingPage() {
                   </FormItem>
                 )}
               />
-              <FormField
+              {/* <FormField
               control={form.control}
               name="edv"
               render={({ field }) => (
@@ -111,8 +111,8 @@ export default function SettingPage() {
                   <FormMessage />
                 </FormItem>
               )}
-            />
-              <FormField
+            /> */}
+              {/* <FormField
               control={form.control}
               name="edv"
               render={({ field }) => (
@@ -129,7 +129,7 @@ export default function SettingPage() {
                   <FormMessage />
                 </FormItem>
               )}
-            />
+            /> */}
 
               {user?.isOauth === false && (
                 <>

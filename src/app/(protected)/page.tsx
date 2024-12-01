@@ -26,7 +26,7 @@ export default async function HomePage() {
           </NewEvent> */}
           <TabSchedules />
         </div>
-          {/* <Model3d /> */}
+          <Model3d />
 
         {/* <div className="w-5/6 h-[60vh]">
         </div> */}

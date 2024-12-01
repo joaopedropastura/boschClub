@@ -13,17 +13,13 @@ import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { CalendarIcon } from "@radix-ui/react-icons";
 import { ControllerRenderProps } from "react-hook-form";
-import { GetEventsByPlaceId } from "@/actions/event/event";
+import { GetEventsByPlaceId } from "@/actions/event/events";
 
 export default async function NewEventDataPicker(
   field: ControllerRenderProps<z.infer<typeof eventSchema>, "date">,
   placeId: string
-
-
 ) {
-
   const events = await GetEventsByPlaceId(placeId);
-
 
   return (
     <FormItem>
@@ -55,13 +51,12 @@ export default async function NewEventDataPicker(
               date < new Date() ||
               date >
                 new Date(
-                  new Date().getFullYear() + 1,
-                  new Date().getMonth(),
+                  new Date().getFullYear(),
+                  new Date().getMonth() + 2,
                   new Date().getDate()
                 )
             }
             events={events}
-            
             initialFocus
           />
         </PopoverContent>

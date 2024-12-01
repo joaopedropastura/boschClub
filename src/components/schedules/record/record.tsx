@@ -10,6 +10,8 @@ import UserCardSchedulesRecord from "./card-record";
 
 export default async function HistorySchedules() {
   const data = await UserSchedulesHistory();
+
+  console.log(data);
   return (
     <Accordion type="single" collapsible className="w-full">
       <AccordionItem value="item-1">

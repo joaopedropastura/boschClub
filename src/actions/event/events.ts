@@ -5,6 +5,7 @@ import { eventSchema } from "@/schemas/event";
 import { getPlaceById } from "@/data/place/place";
 import { getTypePlaceById } from "@/data/place/type-of-place";
 import { getUserById } from "@/data/user/user";
+import { sendEventConfirmedEmail } from "@/lib/mail";
 const domain = process.env.NEXT_PUBLIC_APP_URL;
 
 function convertTimeToDateTime(date: Date, time: string): Date {
@@ -33,6 +34,10 @@ export async function RegisterEvent(values: z.infer<typeof eventSchema>) {
     },
     body: JSON.stringify(newEvent),
   });
+  const userData = await getUserById(values.renterId);
+  const placeData = await getPlaceById(values.placeId);
+  
+  await sendEventConfirmedEmail(userData?.email!, placeData!, newEvent.date.toString());
 
   const data = await response.json();
 
@@ -112,9 +117,6 @@ export async function GetEventsToAdminTable() {
       };
     })
   );
-
-  console.log(eventsWithRenter);
-
   return {
     data: eventsWithRenter,
     status: response.status,

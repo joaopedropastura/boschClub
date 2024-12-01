@@ -153,7 +153,7 @@ export default function NewEventForm({
           setError("verifique os dados");
           return;
         }
-        setSuccess("cadastro efetuado com sucesso");
+        setSuccess("evento criado com sucesso");
       });
     });
   };
@@ -254,8 +254,8 @@ export default function NewEventForm({
                           date < new Date() ||
                           date >
                             new Date(
-                              new Date().getFullYear() + 1,
-                              new Date().getMonth(),
+                              new Date().getFullYear(),
+                              new Date().getMonth() + 2,
                               new Date().getDate()
                             )
                         }

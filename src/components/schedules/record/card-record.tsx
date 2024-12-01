@@ -85,7 +85,7 @@ export default async function UserCardSchedulesHistory() {
             <div>{formatDate(event.date)}</div>
             <div className="text-xs">
               {formatTime(event.startTime) === "00:00"
-                ? "Dia todo"
+                ? "Dia inteiro"
                 : `${formatTime(event.startTime)} ~ ${formatTime(
                     event.endTime
                   )}`}

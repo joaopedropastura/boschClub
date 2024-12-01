@@ -29,7 +29,7 @@ import {
 
 import { cn } from "@/lib/utils";
 import { toast } from "@/components/ui/use-toast";
-import { GetEventsByPlaceId } from "@/actions/event/event";
+import { GetEventsByPlaceId } from "@/actions/event/events";
 
 export default function CalendarItem({ typeId }: { typeId: string }) {
   const [events, setEvents] = useState([]);
@@ -54,15 +54,18 @@ export default function CalendarItem({ typeId }: { typeId: string }) {
     resolver: zodResolver(FormSchema),
   });
 
-
   useEffect(() => {
     const fetchData = async () => {
       const data = await GetEventsByPlaceId(typeId);
-      setEvents(data.events.map((e: { date: Date, type: String }) => ({ date: e.date, type: e.type})));
+      setEvents(
+        data.events.map((e: { date: Date; type: String }) => ({
+          date: e.date,
+          type: e.type,
+        }))
+      );
     };
     fetchData();
   }, []);
-
 
   return (
     <div className="flex w-full flex-col gap-4">
@@ -120,8 +123,8 @@ export default function CalendarItem({ typeId }: { typeId: string }) {
                         date < new Date() ||
                         date >
                           new Date(
-                            new Date().getFullYear() + 1,
-                            new Date().getMonth(),
+                            new Date().getFullYear(),
+                            new Date().getMonth() + 2,
                             new Date().getDate()
                           )
                       }
